@@ -234,4 +234,4 @@ app.use('/subs', express.Router().post('*', asyncHandler(createSubscription)));
 app.use('/md', express.Router().get('*', asyncHandler(md)));
 app.get('/', asyncHandler(root));
 
-const srv = app.listen(4502, () => console.log(`Started development server on http://localhost${srv.address().port}/`));
+const srv = app.listen(4502, () => console.log(`Started development server on http://localhost:${srv.address().port}/`));

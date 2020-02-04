@@ -16,7 +16,7 @@ const { OneDrive } = require('@adobe/helix-onedrive-support');
 const { info, debug, SimpleInterface } = require('@adobe/helix-log');
 
 const STATE_FILE = '.hlx-1d.json';
-
+const AUTH_FILE = '.auth.json';
 
 let state = {};
 async function loadState() {
@@ -52,7 +52,7 @@ function getOneDriveClient() {
   }
   let tokens = {};
   try {
-    tokens = JSON.parse(fs.readFileSync('.auth.json', 'utf-8'));
+    tokens = JSON.parse(fs.readFileSync(AUTH_FILE, 'utf-8'));
   } catch (e) {
     // ignore
   }
@@ -73,10 +73,24 @@ function getOneDriveClient() {
   });
   // register event handle to write back tokens.
   client.on('tokens', (newTokens) => {
-    fs.writeFileSync('.auth.json', JSON.stringify(newTokens, null, 2), 'utf-8');
-    info('updated ".auth.json" file.');
+    fs.writeFileSync(AUTH_FILE, JSON.stringify(newTokens, null, 2), 'utf-8');
+    info(`updated ${AUTH_FILE} file.`);
   });
   return client;
+}
+
+async function login() {
+  const od = getOneDriveClient();
+  if (await od.getAccessToken(false)) {
+    info('already logged in.');
+    return;
+  }
+  await od.login(true);
+}
+
+async function logout() {
+  // for now, we just delete the .auth.json
+  await fs.remove(AUTH_FILE);
 }
 
 async function me() {
@@ -248,4 +262,6 @@ module.exports = {
   ls,
   download,
   upload,
+  login,
+  logout,
 };

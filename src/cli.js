@@ -40,6 +40,16 @@ class CLI {
         handler: cmdsOneDrive.me,
       })
       .command({
+        command: 'login',
+        desc: 'Start the login interactive flow.',
+        handler: cmdsOneDrive.login,
+      })
+      .command({
+        command: 'logout',
+        desc: 'Logout be removing the authorization file.',
+        handler: cmdsOneDrive.logout,
+      })
+      .command({
         command: 'resolve <link>',
         desc: 'Resolves a share link to the respective drive item.',
         handler: cmdsOneDrive.resolve,

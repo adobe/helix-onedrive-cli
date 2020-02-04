@@ -26,14 +26,14 @@
   },
   "homepage": "https://github.com/adobe/helix-onedrive-cli#readme",
   "dependencies": {
-    "@adobe/helix-log": "^4.5.0",
-    "@adobe/helix-onedrive-support": "^1.1.0",
-    "chalk": "^3.0.0",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "fs-extra": "^8.1.0",
-    "yargs": "^15.1.0"
+    "@adobe/helix-log": "4.5.0",
+    "@adobe/helix-onedrive-support": "1.2.0",
+    "chalk": "3.0.0",
+    "cookie-parser": "1.4.4",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "fs-extra": "8.1.0",
+    "yargs": "15.1.0"
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.0",
