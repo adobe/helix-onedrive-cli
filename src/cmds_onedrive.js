@@ -234,7 +234,7 @@ async function upload(args) {
     throw Error(chalk`Uploading a directory not supported yet.`);
   }
 
-  const dst = path.posix.join(state.cwd, args.path);
+  const dst = path.posix.join(state.cwd, args.path || path.basename(src));
   const driveItem = await getDriveItem(state.root);
   const od = getOneDriveClient();
   info(chalk`uploading {yellow ${path.relative('.', src)}} to {yellow ${dst}}`);
