@@ -7,3 +7,6 @@ tmp
 logs
 .DS_Store
 test-results.xml
+.env
+.auth.json
+.hlx-1d.json
