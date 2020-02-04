@@ -23,20 +23,26 @@ Usage: 1d <command>
 
 Commands:
   1d me                   Show information about the logged in user.
+  1d login                Start the login interactive flow.
+  1d logout               Logout be removing the authorization file.
   1d resolve <link>       Resolves a share link to the respective drive item.
   1d ls [path]            Lists the contents of the [path]
   1d get <path> [local]   downloads the file at path
   1d put <local> [path]]  upload the local file.
 
 Options:
-  --version      Show version number                                                                                                                                                                      [boolean]
-  --verbose, -v  Run with verbose logging                                                                                                                                                                 [boolean]
+  --version      Show version number
+  --verbose, -v  Run with verbose logging
   --help         Show help
 ```
 
 ## Setup
 
-The 1d client needs a `.env` file containing the azure client-id and client-secret of an app (currently the id-token authentication is not supported). for example:
+The 1d client runs with a default client id which supports interactive login. Just run
+`1d login`, copy paste the authorization code in the browser and sing into microsoft.
+
+If you want to run the client with different parameters, you can provide
+a `.env` file containing the azure client-id and client-secret of your app.
 
 ```
 $ cat .env

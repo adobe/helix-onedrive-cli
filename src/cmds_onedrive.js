@@ -17,6 +17,7 @@ const { info, debug, SimpleInterface } = require('@adobe/helix-log');
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
+const DEFAULT_CLIENT_ID = 'f4c79ff7-bbd2-4b36-822e-a89eb6de4578';
 
 let state = {};
 async function loadState() {
@@ -37,8 +38,8 @@ function getOneDriveClient() {
     return client;
   }
   const {
-    AZURE_APP_CLIENT_ID: clientId,
-    AZURE_APP_CLIENT_SECRET: clientSecret,
+    AZURE_APP_CLIENT_ID: clientId = DEFAULT_CLIENT_ID,
+    AZURE_APP_CLIENT_SECRET: clientSecret = '',
     AZURE_APP_REFRESH_TOKEN: refreshToken = '',
     AZURE_APP_TENANT: tenant = '',
   } = process.env;
