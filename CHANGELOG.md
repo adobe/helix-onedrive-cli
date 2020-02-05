@@ -1,3 +1,17 @@
+# 1.0.0 (2020-02-05)
+
+
+### Bug Fixes
+
+* **upload:** Destination is incorrectly computed ([#1](https://github.com/adobe/helix-onedrive-cli/issues/1)) ([cf0266e](https://github.com/adobe/helix-onedrive-cli/commit/cf0266e4731dffa73d60241afb1af70bf8eb8746))
+
+
+### Features
+
+* **auth:** add support for login/logout ([55aad0b](https://github.com/adobe/helix-onedrive-cli/commit/55aad0b1cc82806699eef9a5cb584f3d5c900f7c))
+* **cli:** add interactive login ([a49b2b4](https://github.com/adobe/helix-onedrive-cli/commit/a49b2b489ace0f9cead84fa6c93673e98fbd1f40))
+* **core:** initial commit ([02eae8a](https://github.com/adobe/helix-onedrive-cli/commit/02eae8afdedb57158eb9157add7b273da94515cc))
+
 ## [1.3.2](https://github.com/adobe/helix-library/compare/v1.3.1...v1.3.2) (2020-01-27)
 
 
