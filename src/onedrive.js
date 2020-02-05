@@ -12,6 +12,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
+const openBrowser = require('open');
 const { OneDrive } = require('@adobe/helix-onedrive-support');
 const { info, debug, SimpleInterface } = require('@adobe/helix-log');
 
@@ -86,7 +87,9 @@ async function login() {
     info('already logged in.');
     return;
   }
-  await od.login(true);
+  await od.login(async (code) => {
+    await openBrowser(code.verificationUrl);
+  });
 }
 
 async function logout() {
