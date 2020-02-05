@@ -14,12 +14,11 @@
 
 'use strict';
 
-const assert = require('assert');
-const index = require('../src/index.js').main;
+const CLI = require('../src/cli.js');
 
-describe('Index Tests', () => {
-  it('index function is present', async () => {
-    const result = await index();
-    assert.equal(result, 'Hello, world.');
+describe('CLI Tests', () => {
+  it('CLI can be invoked wit default arguments', async () => {
+    const cli = new CLI();
+    cli.run(['--version']); // currently shows mocha version number
   });
 });

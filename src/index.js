@@ -15,4 +15,6 @@
 const CLI = require('./cli.js');
 require('dotenv').config();
 
-new CLI().run(process.argv.slice(2));
+const cmdsOneDrive = require('./onedrive.cmd.js');
+
+new CLI([cmdsOneDrive]).run(process.argv.slice(2));

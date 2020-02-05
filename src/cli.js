@@ -16,12 +16,11 @@
 
 const yargs = require('yargs');
 const { rootLogger } = require('@adobe/helix-log');
-const cmdsOneDrive = require('./cmds_onedrive.js');
 
 const MIN_MSG = 'You need at least one command.';
 
 class CLI {
-  constructor() {
+  constructor(plugins = []) {
     this._failFn = (message, err, argv) => {
       const msg = err ? err.message : message;
       console.error(msg);
@@ -30,50 +29,13 @@ class CLI {
       }
       process.exit(1);
     };
+    this._plugins = plugins;
   }
 
   run(argv) {
-    return yargs()
-      .command({
-        command: 'me',
-        desc: 'Show information about the logged in user.',
-        handler: cmdsOneDrive.me,
-      })
-      .command({
-        command: 'login',
-        desc: 'Start the login interactive flow.',
-        handler: cmdsOneDrive.login,
-      })
-      .command({
-        command: 'logout',
-        desc: 'Logout be removing the authorization file.',
-        handler: cmdsOneDrive.logout,
-      })
-      .command({
-        command: 'resolve <link>',
-        desc: 'Resolves a share link to the respective drive item.',
-        handler: cmdsOneDrive.resolve,
-      })
-      .command({
-        command: 'ls [path]',
-        desc: 'Lists the contents of the [path]',
-        handler: cmdsOneDrive.ls,
-      })
-      .command({
-        command: 'get <path> [local]',
-        desc: 'downloads the file at path',
-        handler: cmdsOneDrive.download,
-        builder: (y) => y.option('recursive', {
-          alias: 'r',
-          type: 'boolean',
-          description: 'Download recursively',
-        }),
-      })
-      .command({
-        command: 'put <local> [path]]',
-        desc: 'upload the local file.',
-        handler: cmdsOneDrive.upload,
-      })
+    const y = yargs();
+    this._plugins.forEach((p) => p(y));
+    return y
       .option('verbose', {
         alias: 'v',
         type: 'boolean',
