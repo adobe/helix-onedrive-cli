@@ -37,6 +37,11 @@ function install(yargs) {
       handler: onedrive.resolve,
     })
     .command({
+      command: 'chroot <root>',
+      desc: 'Manually set a root drive.',
+      handler: onedrive.chroot,
+    })
+    .command({
       command: 'ls [path]',
       desc: 'Lists the contents of the [path]',
       handler: onedrive.ls,
@@ -55,6 +60,11 @@ function install(yargs) {
       command: 'put <local> [path]]',
       desc: 'upload the local file.',
       handler: onedrive.upload,
+    })
+    .command({
+      command: 'subscriptions',
+      desc: 'list active subscriptions.',
+      handler: onedrive.subscriptions,
     });
 }
 
