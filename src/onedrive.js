@@ -119,6 +119,22 @@ async function resolve(args) {
   info(chalk`\nroot path updated: {yellow ${canonicalPath}}`);
 }
 
+async function chroot(args) {
+  const [,, driveId] = args.root.split('/');
+
+  const od = getOneDriveClient();
+  const result = await od.getRootFolderId(driveId);
+  const { id, name, webUrl } = result;
+  const canonicalPath = `/drives/${driveId}/items/${id}`;
+  info(chalk`   Name: {yellow ${name}}`);
+  info(chalk`     Id: {yellow ${id}}`);
+  info(chalk`    URL: {yellow ${webUrl}}`);
+  state.root = canonicalPath;
+  state.cwd = '/';
+  await saveState();
+  info(chalk`\nroot path updated: {yellow ${state.root}}`);
+}
+
 async function getDriveItem(url) {
   // todo: parse better
   const [, , driveId, , id] = url.split('/');
@@ -260,12 +276,25 @@ async function upload(args) {
   await od.uploadDriveItem(buf, driveItem, dst);
 }
 
+async function subscriptions() {
+  const od = getOneDriveClient();
+  const result = await od.listSubscriptions();
+  result.value.forEach((item) => {
+    const { id, resource, expirationDateTime } = item;
+    info(chalk`       Id: {yellow ${id}}`);
+    info(chalk` Resource: {yellow ${resource}}`);
+    info(chalk`  Expires: {yellow ${expirationDateTime}}\n`);
+  });
+}
+
 module.exports = {
   me,
   resolve,
+  chroot,
   ls,
   download,
   upload,
   login,
   logout,
+  subscriptions,
 };
