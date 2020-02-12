@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.0.0...v1.1.0) (2020-02-12)
+
+
+### Features
+
+* **cmd:** subscriptions and chroot ([#4](https://github.com/adobe/helix-onedrive-cli/issues/4)) ([3c33e33](https://github.com/adobe/helix-onedrive-cli/commit/3c33e3355ca9bee1842680ab9af08b51d23f98a8))
+
 # 1.0.0 (2020-02-05)
 
 
