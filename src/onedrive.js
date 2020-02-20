@@ -105,7 +105,10 @@ async function me() {
 
 async function resolve(args) {
   const od = getOneDriveClient();
-  const result = await od.getDriveItemFromShareLink(args.link);
+  const { link } = args;
+  const result = link.startsWith('/drives/')
+    ? await od.getDriveRootItem(link.split('/')[2])
+    : await od.getDriveItemFromShareLink(link);
   const { id, name, webUrl } = result;
   const { driveId } = result.parentReference;
   const canonicalPath = `/drives/${driveId}/items/${id}`;
@@ -117,22 +120,6 @@ async function resolve(args) {
   state.cwd = '/';
   await saveState();
   info(chalk`\nroot path updated: {yellow ${canonicalPath}}`);
-}
-
-async function chroot(args) {
-  const [,, driveId] = args.root.split('/');
-
-  const od = getOneDriveClient();
-  const result = await od.getRootFolderId(driveId);
-  const { id, name, webUrl } = result;
-  const canonicalPath = `/drives/${driveId}/items/${id}`;
-  info(chalk`   Name: {yellow ${name}}`);
-  info(chalk`     Id: {yellow ${id}}`);
-  info(chalk`    URL: {yellow ${webUrl}}`);
-  state.root = canonicalPath;
-  state.cwd = '/';
-  await saveState();
-  info(chalk`\nroot path updated: {yellow ${state.root}}`);
 }
 
 async function getDriveItem(url) {
@@ -149,10 +136,10 @@ async function getDriveItem(url) {
 async function ls(args) {
   await loadState();
   if (!state.root) {
-    throw Error(chalk`ls needs path. use '{grey ${args.$0} resolve}' to set root.`);
+    throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
   if (args.path && args.path.startsWith('https://')) {
-    throw Error(chalk`ls does not work on share links directly. use '{grey ${args.$0} resolve}' to set root.`);
+    throw Error(chalk`${args._[0]} does not work on share links directly. use '{grey ${args.$0} resolve}' to set root.`);
   }
   const p = path.posix.join(state.cwd, args.path || '');
   const driveItem = await getDriveItem(state.root);
@@ -226,7 +213,7 @@ async function downloadRecursively(od, dir, dirPath, driveItem) {
 async function download(args) {
   await loadState();
   if (!state.root) {
-    throw Error(chalk`get needs path. use '{grey ${args.$0} resolve}' to set root.`);
+    throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
   const p = path.posix.join(state.cwd, args.path);
 
@@ -261,7 +248,7 @@ async function download(args) {
 async function upload(args) {
   await loadState();
   if (!state.root) {
-    throw Error(chalk`get needs path. use '{grey ${args.$0} resolve}' to set root.`);
+    throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
   const src = path.resolve('.', args.local);
   if (fs.lstatSync(src).isDirectory()) {
@@ -280,21 +267,82 @@ async function subscriptions() {
   const od = getOneDriveClient();
   const result = await od.listSubscriptions();
   result.value.forEach((item) => {
-    const { id, resource, expirationDateTime } = item;
+    const {
+      id, resource, expirationDateTime, notificationUrl,
+    } = item;
     info(chalk`       Id: {yellow ${id}}`);
     info(chalk` Resource: {yellow ${resource}}`);
+    info(chalk`      URL: {yellow ${notificationUrl}}`);
     info(chalk`  Expires: {yellow ${expirationDateTime}}\n`);
   });
+}
+
+async function poll(args) {
+  await loadState();
+  if (!state.root) {
+    throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
+  }
+
+  const od = getOneDriveClient();
+  const resource = `/drives/${state.root.split('/')[2]}/root`;
+
+  info('Fetching initial drive contents, this might take a while...');
+  const initial = await od.fetchChanges(resource);
+  const pathCache = initial.changes.filter(
+    (item) => item.id && item.file && item.name && item.parentReference,
+  ).reduce((map, item) => {
+    const [, parent] = item.parentReference.path.split(':');
+    map.set(item.id, `${parent}/${item.name}`);
+    return map;
+  }, new Map());
+  let nextToken = initial.token;
+
+  info('Polling for changes, enter Ctrl-c to exit.');
+  process.on('SIGINT', () => {
+    info('Poll terminated');
+    process.exit();
+  });
+
+  for (;;) {
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise((r) => {
+      setTimeout(r, 2000);
+    });
+    // eslint-disable-next-line no-await-in-loop
+    const result = await od.fetchChanges(resource, nextToken);
+    result.changes.filter(
+      (change) => change.id && change.file && change.parentReference,
+    ).forEach((change) => {
+      const cachedPath = pathCache.get(change.id);
+      const changePath = change.name && change.parentReference.path
+        ? `${change.parentReference.path.split(':')[1]}/${change.name}` : null;
+
+      if (change.deleted) {
+        info(chalk`{red - ${cachedPath}}`);
+        pathCache.delete(change.id);
+      } else if (!cachedPath) {
+        info(chalk`{green + ${changePath}}`);
+        pathCache.set(change.id, changePath);
+      } else if (cachedPath !== changePath) {
+        info(chalk`{red - ${cachedPath}}`);
+        info(chalk`{green + ${changePath}}`);
+        pathCache.set(change.id, changePath);
+      } else {
+        info(chalk`{blue * ${changePath}}`);
+      }
+    });
+    nextToken = result.token;
+  }
 }
 
 module.exports = {
   me,
   resolve,
-  chroot,
   ls,
   download,
   upload,
   login,
   logout,
   subscriptions,
+  poll,
 };
