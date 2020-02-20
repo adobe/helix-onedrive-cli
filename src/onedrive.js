@@ -67,7 +67,7 @@ function getOneDriveClient() {
   client = new OneDrive({
     clientId,
     clientSecret,
-    refreshToken,
+    refreshToken: refreshToken || tokens.refreshToken,
     tenant,
     accessToken,
     expiresOn,
