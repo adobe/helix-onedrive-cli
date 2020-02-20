@@ -5,6 +5,13 @@
 
 * **deps:** update dependency @adobe/helix-onedrive-support to v2 ([#7](https://github.com/adobe/helix-onedrive-cli/issues/7)) ([e54e40d](https://github.com/adobe/helix-onedrive-cli/commit/e54e40d1bd4a4d99386cbe5f29933b229e917ede))
 
+## [1.1.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.1.0...v1.1.1) (2020-02-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v2 ([#7](https://github.com/adobe/helix-onedrive-cli/issues/7)) ([e54e40d](https://github.com/adobe/helix-onedrive-cli/commit/e54e40d1bd4a4d99386cbe5f29933b229e917ede))
+
 # [1.1.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.0.0...v1.1.0) (2020-02-12)
 
 
