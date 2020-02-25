@@ -1,3 +1,13 @@
+## [1.1.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.1.0...v1.1.1) (2020-02-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-log to v4.5.1 ([13150eb](https://github.com/adobe/helix-onedrive-cli/commit/13150eb7da23c4821b39beeacff61214d3f88de1))
+* **deps:** update dependency @adobe/helix-onedrive-support to v2 ([#7](https://github.com/adobe/helix-onedrive-cli/issues/7)) ([e54e40d](https://github.com/adobe/helix-onedrive-cli/commit/e54e40d1bd4a4d99386cbe5f29933b229e917ede))
+* **onedrive:** refreshToken from .auth.json is not taken into account ([59a0819](https://github.com/adobe/helix-onedrive-cli/commit/59a08195a2edb19e70f43bb49ac8272687264d06))
+* **onedrive:** refreshToken from .auth.json is not taken into account ([#8](https://github.com/adobe/helix-onedrive-cli/issues/8)) ([620f102](https://github.com/adobe/helix-onedrive-cli/commit/620f1020479f9ad5cecb81b03ef7d9e8ed37a9bb))
+
 ## [1.1.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.1.0...v1.1.1) (2020-02-20)
 
 
