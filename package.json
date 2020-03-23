@@ -32,7 +32,7 @@
     "cookie-parser": "1.4.5",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "fs-extra": "8.1.0",
+    "fs-extra": "9.0.0",
     "open": "7.0.3",
     "yargs": "15.3.1"
   },
