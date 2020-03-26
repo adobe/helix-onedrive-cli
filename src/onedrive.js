@@ -13,12 +13,34 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const openBrowser = require('open');
+const readline = require('readline');
 const { OneDrive } = require('@adobe/helix-onedrive-support');
 const { info, debug, SimpleInterface } = require('@adobe/helix-log');
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
 const DEFAULT_CLIENT_ID = 'f4c79ff7-bbd2-4b36-822e-a89eb6de4578';
+
+async function prompt(msg, hide = false) {
+  return new Promise((res) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question(msg, (value) => {
+      rl.close();
+      res(value);
+    });
+    // eslint-disable-next-line no-underscore-dangle
+    rl._writeToOutput = function _writeToOutput(c) {
+      if (!hide || c.trim() === '\n' || c === '\r' || c === '\r\n') {
+        rl.output.write(c);
+      } else {
+        rl.output.write('*');
+      }
+    };
+  });
+}
 
 let state = {};
 async function loadState() {
@@ -43,6 +65,8 @@ function getOneDriveClient() {
     AZURE_APP_CLIENT_SECRET: clientSecret = '',
     AZURE_APP_REFRESH_TOKEN: refreshToken = '',
     AZURE_APP_TENANT: tenant = '',
+    AZURE_APP_USER: username = '',
+    AZURE_APP_PASS: password = '',
   } = process.env;
 
   if (!clientId) {
@@ -69,6 +93,8 @@ function getOneDriveClient() {
     clientSecret,
     refreshToken: refreshToken || tokens.refreshToken,
     tenant,
+    username,
+    password,
     accessToken,
     expiresOn,
     log: new SimpleInterface({ level: 'trace' }),
@@ -81,12 +107,33 @@ function getOneDriveClient() {
   return client;
 }
 
-async function login() {
+async function login(username, password) {
   const od = getOneDriveClient();
   if (await od.getAccessToken(false)) {
     info('already logged in.');
     return;
   }
+  if (username !== undefined) {
+    if (!username) {
+      // eslint-disable-next-line no-param-reassign
+      username = await prompt('username: ');
+    } else {
+      info(`username: ${username}`);
+    }
+    if (!password) {
+      // eslint-disable-next-line no-param-reassign
+      password = await prompt('password: ', true);
+    } else {
+      info('password: ***');
+    }
+    od.username = username;
+    od.password = password;
+    await od.getAccessToken();
+    const result = await od.me();
+    info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
+    return;
+  }
+
   await od.login(async (code) => {
     await openBrowser(code.verificationUrl);
   });
@@ -99,6 +146,7 @@ async function logout() {
 
 async function me() {
   const od = getOneDriveClient();
+  await od.me();
   const result = await od.me();
   info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
 }

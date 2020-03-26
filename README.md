@@ -23,7 +23,7 @@ Usage: 1d <command>
 
 Commands:
   1d me                   Show information about the logged in user.
-  1d login                Start the login interactive flow.
+  1d login                Start the login interactive flow or ROPC flow with username / password.
   1d logout               Logout be removing the authorization file.
   1d resolve <link>       Resolves a share link to the respective drive item.
   1d ls [path]            Lists the contents of the [path]
@@ -44,8 +44,7 @@ The 1d client runs with a default client id which supports interactive login. Ju
 If you want to run the client with different parameters, you can provide
 a `.env` file containing the azure client-id and client-secret of your app.
 
-```
-$ cat .env
+```dotenv
 # azure app oauth secrets
 AZURE_APP_CLIENT_ID="11111111-1111-1111-1111-11111111111"
 AZURE_APP_CLIENT_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -53,8 +52,8 @@ AZURE_APP_CLIENT_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 After the `.env` is setup, start the _dev server_ with:
 
-```
-npm start
+```console
+$ npm start
 ```
 
 and open a browser at: http://localhost:4502/.
@@ -62,12 +61,36 @@ and open a browser at: http://localhost:4502/.
 click on the link to login. after successful login to microsoft, the server writes a `.auth.json` on disk.
 After that you can stop the server, and use the cli, eg:
 
-```
+```console
 $ 1d me
 Logged in as: John Doe (john@example.com) 
 ```
 
 To reset authentication, just delete the `.auth.json` file and open the browser in private mode.
+
+### Login with device token
+
+In order to login with a device token, run:
+
+```console
+$ 1d login
+To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code HNGP5CAF8 to authenticate.
+updated .auth.json file.
+$ 1d me
+Logged in as: John Doe (john@doe.com)
+```
+
+### Login with username / password
+
+Some accounts and apps allow login with username and password (ROPC flow). Usually federated accounts require MFA,
+which disallow using ROPC.
+
+```console
+$ 1d login --username=john@doe.com
+password: ****
+updated .auth.json file.
+Logged in as: John Doe (john@doe.com)
+```
 
 ## Development
 
