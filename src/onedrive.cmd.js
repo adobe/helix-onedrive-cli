@@ -57,9 +57,14 @@ function install(yargs) {
       handler: onedrive.upload,
     })
     .command({
-      command: 'subscriptions',
-      desc: 'list active subscriptions.',
-      handler: onedrive.subscriptions,
+      command: ['subscriptions', 'sub'],
+      desc: 'list, create or delete subscriptions.',
+      handler: () => yargs.showHelp(),
+      builder: (y) => y.command({
+        command: ['list', 'ls'],
+        desc: 'list subscriptions.',
+        handler: onedrive.listSubscriptions,
+      }),
     })
     .command({
       command: 'poll',

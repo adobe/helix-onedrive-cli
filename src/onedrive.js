@@ -263,7 +263,7 @@ async function upload(args) {
   await od.uploadDriveItem(buf, driveItem, dst);
 }
 
-async function subscriptions() {
+async function listSubscriptions() {
   const od = getOneDriveClient();
   const result = await od.listSubscriptions();
   result.value.forEach((item) => {
@@ -343,6 +343,6 @@ module.exports = {
   upload,
   login,
   logout,
-  subscriptions,
+  listSubscriptions,
   poll,
 };
