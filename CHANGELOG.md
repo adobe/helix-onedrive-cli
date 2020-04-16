@@ -1,3 +1,35 @@
+## [1.2.2](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.1...v1.2.2) (2020-04-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v2.3.0 ([#30](https://github.com/adobe/helix-onedrive-cli/issues/30)) ([8c8d62a](https://github.com/adobe/helix-onedrive-cli/commit/8c8d62aed34079e2923232607a98519b0a51bce5))
+
+## [1.2.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.0...v1.2.1) (2020-04-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v2.2.0 ([7ed7188](https://github.com/adobe/helix-onedrive-cli/commit/7ed7188f015868f16129a9fbcec602f7e0f0bd3a))
+* **deps:** update dependency chalk to v4 ([#25](https://github.com/adobe/helix-onedrive-cli/issues/25)) ([eb1e62b](https://github.com/adobe/helix-onedrive-cli/commit/eb1e62b8c1d33ca1a6a34d8a20b62b329522a14e))
+
+# [1.2.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.1.0...v1.2.0) (2020-03-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-log to v4.5.1 ([13150eb](https://github.com/adobe/helix-onedrive-cli/commit/13150eb7da23c4821b39beeacff61214d3f88de1))
+* **deps:** update dependency @adobe/helix-onedrive-support to v2 ([#7](https://github.com/adobe/helix-onedrive-cli/issues/7)) ([e54e40d](https://github.com/adobe/helix-onedrive-cli/commit/e54e40d1bd4a4d99386cbe5f29933b229e917ede))
+* **deps:** update dependency fs-extra to v9 ([#20](https://github.com/adobe/helix-onedrive-cli/issues/20)) ([5912574](https://github.com/adobe/helix-onedrive-cli/commit/5912574aaaba57de0c5247707b5839862552a054))
+* **deps:** update dependency yargs to v15.3.0 ([#16](https://github.com/adobe/helix-onedrive-cli/issues/16)) ([a1ab426](https://github.com/adobe/helix-onedrive-cli/commit/a1ab426be75a8c7854e4cb6b96edfe3b665c1684))
+* **onedrive:** refreshToken from .auth.json is not taken into account ([59a0819](https://github.com/adobe/helix-onedrive-cli/commit/59a08195a2edb19e70f43bb49ac8272687264d06))
+* **onedrive:** refreshToken from .auth.json is not taken into account ([#8](https://github.com/adobe/helix-onedrive-cli/issues/8)) ([620f102](https://github.com/adobe/helix-onedrive-cli/commit/620f1020479f9ad5cecb81b03ef7d9e8ed37a9bb))
+
+
+### Features
+
+* **login:** add ROPC flow ([#22](https://github.com/adobe/helix-onedrive-cli/issues/22)) ([f32504b](https://github.com/adobe/helix-onedrive-cli/commit/f32504b61df9deaf75d5e2b898400e2e079b3aeb)), closes [#21](https://github.com/adobe/helix-onedrive-cli/issues/21)
+
 ## [1.1.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.1.0...v1.1.1) (2020-03-23)
 
 
