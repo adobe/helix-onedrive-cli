@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.2...v1.2.3) (2020-04-16)
+
+
+### Bug Fixes
+
+* **subscriptions:** manage subscriptions ([#26](https://github.com/adobe/helix-onedrive-cli/issues/26)) ([35d3029](https://github.com/adobe/helix-onedrive-cli/commit/35d30295157b325d1a2508c9e7c32389da7a5d96))
+
 ## [1.2.2](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.1...v1.2.2) (2020-04-16)
 
 
