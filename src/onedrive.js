@@ -311,7 +311,25 @@ async function upload(args) {
   await od.uploadDriveItem(buf, driveItem, dst);
 }
 
-async function subscriptions() {
+async function createSubscription(args) {
+  const { resource, url } = args;
+  const od = getOneDriveClient();
+  const result = await od.createSubscription({
+    resource,
+    notificationUrl: url,
+    clientState: args['client-state'],
+  });
+
+  const {
+    id, expirationDateTime,
+  } = result;
+  info(chalk`       Id: {yellow ${id}}`);
+  info(chalk` Resource: {yellow ${resource}}`);
+  info(chalk`      URL: {yellow ${url}}`);
+  info(chalk`  Expires: {yellow ${expirationDateTime}}\n`);
+}
+
+async function listSubscriptions() {
   const od = getOneDriveClient();
   const result = await od.listSubscriptions();
   result.value.forEach((item) => {
@@ -323,6 +341,28 @@ async function subscriptions() {
     info(chalk`      URL: {yellow ${notificationUrl}}`);
     info(chalk`  Expires: {yellow ${expirationDateTime}}\n`);
   });
+}
+
+async function refreshSubscription(args) {
+  const { id } = args;
+
+  const od = getOneDriveClient();
+  const result = await od.refreshSubscription(id);
+
+  const {
+    resource, expirationDateTime, notificationUrl,
+  } = result;
+  info(chalk`       Id: {yellow ${id}}`);
+  info(chalk` Resource: {yellow ${resource}}`);
+  info(chalk`      URL: {yellow ${notificationUrl}}`);
+  info(chalk`  Expires: {yellow ${expirationDateTime}}\n`);
+}
+
+async function deleteSubscription(args) {
+  const { id } = args;
+
+  const od = getOneDriveClient();
+  await od.deleteSubscription(id);
 }
 
 async function poll(args) {
@@ -391,6 +431,9 @@ module.exports = {
   upload,
   login,
   logout,
-  subscriptions,
+  listSubscriptions,
+  createSubscription,
+  refreshSubscription,
+  deleteSubscription,
   poll,
 };
