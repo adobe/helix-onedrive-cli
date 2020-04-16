@@ -264,9 +264,13 @@ async function upload(args) {
 }
 
 async function createSubscription(args) {
-  const { resource, url, clientstate } = args;
+  const { resource, url } = args;
   const od = getOneDriveClient();
-  const result = await od.createSubscription(resource, url, clientstate);
+  const result = await od.createSubscription({
+    resource,
+    notificationUrl: url,
+    clientState: args['client-state'],
+  });
 
   const {
     id, expirationDateTime,

@@ -67,18 +67,18 @@ function install(yargs) {
           handler: onedrive.listSubscriptions,
         })
         .command({
-          command: 'create <resource> <url> <clientstate>',
-          desc: 'create subscriptions.',
+          command: 'create <resource> <url> <client-state>',
+          desc: 'create a subscription.',
           handler: onedrive.createSubscription,
         })
         .command({
           command: 'refresh <id>',
-          desc: 'refresh subscription.',
+          desc: 'refresh a subscription.',
           handler: onedrive.refreshSubscription,
         })
         .command({
           command: 'delete <id>',
-          desc: 'delete subscription.',
+          desc: 'delete a subscription.',
           handler: onedrive.deleteSubscription,
         }),
     })
