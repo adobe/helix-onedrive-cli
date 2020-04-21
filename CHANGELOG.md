@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.3...v1.2.4) (2020-04-21)
+
+
+### Bug Fixes
+
+* **security:** increase version for minimist ([822b441](https://github.com/adobe/helix-onedrive-cli/commit/822b4414f03bee5f709678cd63149f777fbbb0ec))
+
 ## [1.2.3](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.2...v1.2.3) (2020-04-16)
 
 
