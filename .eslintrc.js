@@ -11,7 +11,6 @@
  */
 
 module.exports = {
-    root: true,
-    extends: '@adobe/helix',
-  };
-  
+  root: true,
+  extends: '@adobe/helix',
+};
