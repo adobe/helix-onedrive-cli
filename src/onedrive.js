@@ -192,16 +192,17 @@ async function ls(args) {
   const p = path.posix.join(state.cwd, args.path || '');
   const driveItem = await getDriveItem(state.root);
   // console.log(driveItem);
+  process.stdout.write(chalk`{gray ${state.root}}\n`);
   const od = getOneDriveClient();
   const result = await od.listChildren(driveItem, p);
   result.value.forEach((item) => {
     let itemPath = path.posix.join(p, item.name);
     if (item.folder) {
-      itemPath += '/';
+      itemPath = chalk`{blue ${itemPath}/}`;
     }
-    process.stdout.write(`${itemPath}\n`);
+    // console.log(item);
+    process.stdout.write(chalk` {yellow ${item.id}} ${itemPath}\n`);
   });
-  // console.log(result);
 }
 
 async function processQueue(queue, fn, maxConcurrent = 8) {
