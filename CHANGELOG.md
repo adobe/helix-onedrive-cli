@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.4...v1.2.5) (2020-05-19)
+
+
+### Bug Fixes
+
+* **ls:** add itemid to ls ([#37](https://github.com/adobe/helix-onedrive-cli/issues/37)) ([5dca98c](https://github.com/adobe/helix-onedrive-cli/commit/5dca98c415b9adfd4317e3ff3688150ca9057a3b))
+
 ## [1.2.4](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.3...v1.2.4) (2020-04-21)
 
 
