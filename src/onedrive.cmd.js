@@ -96,7 +96,8 @@ function install(yargs) {
       command: 'poll',
       desc: 'continuously polls for changes in a drive.',
       handler: onedrive.poll,
-    });
+    })
+    .commandDir('excel');
 }
 
 module.exports = install;
