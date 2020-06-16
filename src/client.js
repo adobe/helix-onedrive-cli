@@ -94,7 +94,6 @@ function getOneDriveClient() {
   return client;
 }
 
-
 module.exports = {
   getState,
   loadState,
