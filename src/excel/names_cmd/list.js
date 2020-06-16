@@ -64,7 +64,7 @@ async function handler(args) {
 }
 
 Object.assign(exports, {
-  command: ['list [name]', 'ls', '$0'],
+  command: ['list [name]', 'ls'],
   desc: 'List all names in a work book or work sheet',
   handler: (y) => handler(y),
 });

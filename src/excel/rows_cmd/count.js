@@ -13,6 +13,7 @@
 'use strict';
 
 const chalk = require('chalk');
+const { info } = require('@adobe/helix-log');
 
 const {
   loadState, getOneDriveClient,
@@ -30,9 +31,8 @@ function getDriveItem(url) {
 }
 
 async function handler(args) {
-  const {
-    sheet, name, value, comment,
-  } = args;
+  const name = args['table-name'];
+
   const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
@@ -40,16 +40,14 @@ async function handler(args) {
 
   const od = getOneDriveClient();
   const driveItem = getDriveItem(state.root);
-  let container = await od.getWorkbook(driveItem);
-  if (sheet) {
-    container = container.worksheet(sheet);
-  }
-  await container.addNamedItem(name, value, comment);
+  const workbook = await od.getWorkbook(driveItem);
+
+  const count = await workbook.table(name).getRowCount();
+  info(chalk`{yellow ${count}}`);
 }
 
 Object.assign(exports, {
-  command: 'add <name> <value> [comment]',
-  desc: 'add a named item to a work book or work sheet',
-  alias: 'add',
+  command: ['count <table-name>'],
+  desc: 'Shows number of rows in a table',
   handler: (y) => handler(y),
 });

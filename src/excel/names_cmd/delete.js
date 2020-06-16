@@ -30,7 +30,8 @@ function getDriveItem(url) {
 }
 
 async function handler(args) {
-  const { sheet, name } = args;
+  const { sheet, names } = args;
+
   const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
@@ -42,11 +43,13 @@ async function handler(args) {
   if (sheet) {
     container = container.worksheet(sheet);
   }
-  await container.deleteNamedItem(name);
+  await Promise.all(names.map(async (name) => {
+    await container.deleteNamedItem(name);
+  }));
 }
 
 Object.assign(exports, {
-  command: ['delete <name>', 'rm'],
+  command: ['delete <names...>', 'rm'],
   desc: 'delete a name in a work book or work sheet',
   handler: (y) => handler(y),
 });

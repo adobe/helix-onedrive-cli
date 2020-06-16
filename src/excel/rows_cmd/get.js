@@ -13,6 +13,7 @@
 'use strict';
 
 const chalk = require('chalk');
+const { info } = require('@adobe/helix-log');
 
 const {
   loadState, getOneDriveClient,
@@ -30,9 +31,8 @@ function getDriveItem(url) {
 }
 
 async function handler(args) {
-  const {
-    sheet, name, value, comment,
-  } = args;
+  const name = args['table-name'];
+
   const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
@@ -40,16 +40,22 @@ async function handler(args) {
 
   const od = getOneDriveClient();
   const driveItem = getDriveItem(state.root);
-  let container = await od.getWorkbook(driveItem);
-  if (sheet) {
-    container = container.worksheet(sheet);
+  const workbook = await od.getWorkbook(driveItem);
+
+  if ('index' in args) {
+    const row = await workbook.table(name).getRow(args.index);
+    info(chalk`${JSON.stringify(row, undefined, 2)}`);
+  } else {
+    const rows = await workbook.table(name).getRows();
+    rows
+      .forEach((row) => {
+        info(chalk`${JSON.stringify(row, undefined, 2)}`);
+      });
   }
-  await container.addNamedItem(name, value, comment);
 }
 
 Object.assign(exports, {
-  command: 'add <name> <value> [comment]',
-  desc: 'add a named item to a work book or work sheet',
-  alias: 'add',
+  command: ['get <table-name> [index]'],
+  desc: 'List some or all rows in a table',
   handler: (y) => handler(y),
 });
