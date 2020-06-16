@@ -14,12 +14,12 @@ const path = require('path');
 const chalk = require('chalk');
 const openBrowser = require('open');
 const readline = require('readline');
-const { OneDrive } = require('@adobe/helix-onedrive-support');
-const { info, debug, SimpleInterface } = require('@adobe/helix-log');
+const { info, debug } = require('@adobe/helix-log');
+const {
+  getState, loadState, saveState, getOneDriveClient,
+} = require('./client.js');
 
-const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
-const DEFAULT_CLIENT_ID = 'f4c79ff7-bbd2-4b36-822e-a89eb6de4578';
 
 async function prompt(msg, hide = false) {
   return new Promise((res) => {
@@ -40,71 +40,6 @@ async function prompt(msg, hide = false) {
       }
     };
   });
-}
-
-let state = {};
-async function loadState() {
-  try {
-    state = await fs.readJson(STATE_FILE);
-  } catch {
-    // ignore
-  }
-}
-async function saveState() {
-  await fs.writeJson(STATE_FILE, state);
-}
-
-let client = null;
-
-function getOneDriveClient() {
-  if (client) {
-    return client;
-  }
-  const {
-    AZURE_APP_CLIENT_ID: clientId = DEFAULT_CLIENT_ID,
-    AZURE_APP_CLIENT_SECRET: clientSecret = '',
-    AZURE_APP_REFRESH_TOKEN: refreshToken = '',
-    AZURE_APP_TENANT: tenant = '',
-    AZURE_APP_USER: username = '',
-    AZURE_APP_PASS: password = '',
-  } = process.env;
-
-  if (!clientId) {
-    info(chalk`{red error:} Missing clientId and/or client secret environment.`);
-    info(chalk`Suggest to create a {yellow .env} file with:\n`);
-    info(chalk`AZURE_APP_CLIENT_ID={gray <client-id of the app>}`);
-    info(chalk`AZURE_APP_CLIENT_SECRET={gray <client-secret of the app>}`);
-    process.exit(-1);
-  }
-  let tokens = {};
-  try {
-    tokens = JSON.parse(fs.readFileSync(AUTH_FILE, 'utf-8'));
-  } catch (e) {
-    // ignore
-  }
-
-  const {
-    accessToken,
-    expiresOn,
-  } = tokens;
-
-  client = new OneDrive({
-    clientId,
-    clientSecret,
-    refreshToken: refreshToken || tokens.refreshToken,
-    tenant,
-    username,
-    password,
-    accessToken,
-    expiresOn,
-    log: new SimpleInterface({ level: 'trace' }),
-  });
-  // register event handle to write back tokens.
-  client.on('tokens', (newTokens) => {
-    fs.writeFileSync(AUTH_FILE, JSON.stringify(newTokens, null, 2), 'utf-8');
-    info(`updated ${AUTH_FILE} file.`);
-  });
-  return client;
 }
 
 async function login(username, password) {
@@ -164,6 +99,7 @@ async function resolve(args) {
   info(chalk`     Id: {yellow ${id}}`);
   info(chalk`    URL: {yellow ${webUrl}}`);
   info(chalk`DriveId: {yellow ${driveId}}`);
+  const state = await getState();
   state.root = canonicalPath;
   state.cwd = '/';
   await saveState();
@@ -182,7 +118,7 @@ async function getDriveItem(url) {
 }
 
 async function ls(args) {
-  await loadState();
+  const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
@@ -260,7 +196,7 @@ async function downloadRecursively(od, dir, dirPath, driveItem) {
 }
 
 async function download(args) {
-  await loadState();
+  const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
@@ -295,7 +231,7 @@ async function download(args) {
 }
 
 async function upload(args) {
-  await loadState();
+  const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
@@ -367,7 +303,7 @@ async function deleteSubscription(args) {
 }
 
 async function poll(args) {
-  await loadState();
+  const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
