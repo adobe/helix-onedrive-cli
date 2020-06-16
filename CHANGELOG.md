@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.7...v1.3.0) (2020-06-16)
+
+
+### Features
+
+* **cli:** Add support for tables, sheets, rows and named items in XL ([#40](https://github.com/adobe/helix-onedrive-cli/issues/40)) ([281f341](https://github.com/adobe/helix-onedrive-cli/commit/281f34102525cc172c232a26f954781111f9a9c9))
+
 ## [1.2.7](https://github.com/adobe/helix-onedrive-cli/compare/v1.2.6...v1.2.7) (2020-06-16)
 
 
