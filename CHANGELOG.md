@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.3.1...v1.4.0) (2020-06-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v2.5.1 ([6e6f610](https://github.com/adobe/helix-onedrive-cli/commit/6e6f61033e3ce46196d5486519845a6eba03ee3b))
+
+
+### Features
+
+* **excel:** add columns command ([#53](https://github.com/adobe/helix-onedrive-cli/issues/53)) ([4c64946](https://github.com/adobe/helix-onedrive-cli/commit/4c649461087c1b47cd56cdc2affa120e438d38f0))
+
 ## [1.3.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.3.0...v1.3.1) (2020-06-20)
 
 
