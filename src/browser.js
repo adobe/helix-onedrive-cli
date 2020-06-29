@@ -11,55 +11,15 @@
  */
 /* eslint-disable no-console */
 const crypto = require('crypto');
-const fs = require('fs');
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { OneDrive } = require('@adobe/helix-onedrive-support');
-
+const { getOneDriveClient } = require('./client.js');
 require('dotenv').config();
 
 const redirectUri = 'http://localhost:4502/token';
 
-function createOneDriveClient() {
-  const {
-    AZURE_APP_CLIENT_ID: clientId,
-    AZURE_APP_CLIENT_SECRET: clientSecret,
-    AZURE_APP_REFRESH_TOKEN: refreshToken,
-    AZURE_APP_TENANT: tenant = '',
-  } = process.env;
-
-  let tokens = {};
-  try {
-    tokens = JSON.parse(fs.readFileSync('tokens.json', 'utf-8'));
-  } catch (e) {
-    // ignore
-  }
-
-  const {
-    accessToken,
-    expiresOn,
-  } = tokens;
-
-  return new OneDrive({
-    clientId,
-    clientSecret,
-    refreshToken,
-    accessToken,
-    expiresOn,
-    tenant,
-  });
-}
-const drive = createOneDriveClient();
-
-// register event handle to write back tokens.
-drive.on('tokens', (tokens) => {
-  fs.writeFileSync('.auth.json', JSON.stringify(tokens, null, 2), 'utf-8');
-  console.log('updated ".auth.json" file.');
-});
-
-// setup express app
-
 async function auth(req, res) {
+  const { drive } = req.app.locals;
   crypto.randomBytes(48, (ex, buf) => {
     const state = buf.toString('base64').replace(/\//g, '_').replace(/\+/g, '-');
     const authorizationUrl = drive.createLoginUrl(redirectUri, state);
@@ -69,6 +29,7 @@ async function auth(req, res) {
 }
 
 async function token(req, res) {
+  const { drive } = req.app.locals;
   if (req.cookies.authstate !== req.query.state) {
     res.send('error: state does not match');
     return;
@@ -83,6 +44,7 @@ async function token(req, res) {
 }
 
 async function root(req, res) {
+  const { drive } = req.app.locals;
   if (!drive.authenticated) {
     res.send('unauthorized. <a href="/auth">sign in</a>');
     return;
@@ -108,6 +70,7 @@ async function root(req, res) {
 }
 
 async function listDocuments(req, res) {
+  const { drive } = req.app.locals;
   const { l } = req.query;
   if (!l) {
     res.end('no share link provided.');
@@ -143,6 +106,7 @@ async function listDocuments(req, res) {
 }
 
 async function listSubscriptions(req, res) {
+  const { drive } = req.app.locals;
   try {
     const result = await drive.listSubscriptions();
     const list = result.value.map((entry) => entry);
@@ -177,6 +141,7 @@ async function listSubscriptions(req, res) {
 }
 
 async function createSubscription(req, res) {
+  const { drive } = req.app.locals;
   try {
     const result = await drive.createSubscription({
       resource: req.body.r,
@@ -197,6 +162,7 @@ async function createSubscription(req, res) {
 }
 
 async function md(req, res) {
+  const { drive } = req.app.locals;
   const { l } = req.query;
   if (!l) {
     res.end('no share link provided.');
@@ -218,20 +184,26 @@ function asyncHandler(fn) {
   return (req, res, next) => (Promise.resolve(fn(req, res, next)).catch(next));
 }
 
-const app = express();
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
+async function run() {
+  const app = express();
+  app.use(cookieParser());
+  app.use(express.urlencoded({ extended: false }));
 
-// generate login redirect
-app.get('/auth', asyncHandler(auth));
+  // generate login redirect
+  app.get('/auth', asyncHandler(auth));
 
-// After consent is granted AAD redirects here.
-app.get('/token', asyncHandler(token));
+  // After consent is granted AAD redirects here.
+  app.get('/token', asyncHandler(token));
 
-app.use('/list', express.Router().get('*', asyncHandler(listDocuments)));
-app.use('/subs', express.Router().get('*', asyncHandler(listSubscriptions)));
-app.use('/subs', express.Router().post('*', asyncHandler(createSubscription)));
-app.use('/md', express.Router().get('*', asyncHandler(md)));
-app.get('/', asyncHandler(root));
+  app.use('/list', express.Router().get('*', asyncHandler(listDocuments)));
+  app.use('/subs', express.Router().get('*', asyncHandler(listSubscriptions)));
+  app.use('/subs', express.Router().post('*', asyncHandler(createSubscription)));
+  app.use('/md', express.Router().get('*', asyncHandler(md)));
+  app.get('/', asyncHandler(root));
 
-const srv = app.listen(4502, () => console.log(`Started development server on http://localhost:${srv.address().port}/`));
+  app.locals.drive = await getOneDriveClient();
+
+  const srv = app.listen(4502, () => console.log(`Started development server on http://localhost:${srv.address().port}/`));
+}
+
+run().catch(console.error);

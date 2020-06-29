@@ -43,8 +43,9 @@ async function prompt(msg, hide = false) {
 }
 
 async function login(username, password) {
-  const od = getOneDriveClient();
-  if (await od.getAccessToken(false)) {
+  const od = await getOneDriveClient();
+  const tokenResponse = await od.getAccessToken();
+  if (tokenResponse.refreshToken) {
     info('already logged in.');
     return;
   }
@@ -80,14 +81,14 @@ async function logout() {
 }
 
 async function me() {
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   await od.me();
   const result = await od.me();
   info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
 }
 
 async function resolve(args) {
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const { link } = args;
   const result = link.startsWith('/drives/')
     ? await od.getDriveRootItem(link.split('/')[2])
@@ -129,7 +130,7 @@ async function ls(args) {
   const driveItem = await getDriveItem(state.root);
   // console.log(driveItem);
   process.stdout.write(chalk`{gray ${state.root}}\n`);
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const result = await od.listChildren(driveItem, p);
   result.value.forEach((item) => {
     let itemPath = path.posix.join(p, item.name);
@@ -218,7 +219,7 @@ async function download(args) {
     throw Error(chalk`Refusing to overwrite {yellow ${dst}}`);
   }
   const driveItem = await getDriveItem(state.root);
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   if (args.recursive) {
     // get 'complete' drive item
     const result = await od.getDriveItem(driveItem, p, false);
@@ -242,7 +243,7 @@ async function upload(args) {
 
   const dst = path.posix.join(state.cwd, args.path || path.basename(src));
   const driveItem = await getDriveItem(state.root);
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   info(chalk`uploading {yellow ${path.relative('.', src)}} to {yellow ${dst}}`);
   const buf = await fs.readFile(src);
   await od.uploadDriveItem(buf, driveItem, dst);
@@ -250,7 +251,7 @@ async function upload(args) {
 
 async function createSubscription(args) {
   const { resource, url } = args;
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const result = await od.createSubscription({
     resource,
     notificationUrl: url,
@@ -267,7 +268,7 @@ async function createSubscription(args) {
 }
 
 async function listSubscriptions() {
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const result = await od.listSubscriptions();
   result.value.forEach((item) => {
     const {
@@ -283,7 +284,7 @@ async function listSubscriptions() {
 async function refreshSubscription(args) {
   const { id } = args;
 
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const result = await od.refreshSubscription(id);
 
   const {
@@ -298,7 +299,7 @@ async function refreshSubscription(args) {
 async function deleteSubscription(args) {
   const { id } = args;
 
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   await od.deleteSubscription(id);
 }
 
@@ -308,7 +309,7 @@ async function poll(args) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
 
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const resource = `/drives/${state.root.split('/')[2]}/root`;
 
   info('Fetching initial drive contents, this might take a while...');
