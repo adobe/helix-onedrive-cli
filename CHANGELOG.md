@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.4.2...v1.5.0) (2020-07-18)
+
+
+### Features
+
+* **poll:** add skip parameter ([#62](https://github.com/adobe/helix-onedrive-cli/issues/62)) ([5cc68b5](https://github.com/adobe/helix-onedrive-cli/commit/5cc68b50d86264860bbe361a04ba4642806601c4))
+
 ## [1.4.2](https://github.com/adobe/helix-onedrive-cli/compare/v1.4.1...v1.4.2) (2020-07-17)
 
 
