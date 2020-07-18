@@ -96,6 +96,12 @@ function install(yargs) {
       command: 'poll',
       desc: 'continuously polls for changes in a drive.',
       handler: onedrive.poll,
+      builder: (y) => y.option('skip', {
+        alias: 's',
+        type: 'boolean',
+        description: 'Skip initial building of path hierarchy',
+        default: false,
+      }),
     })
     .commandDir('excel');
 }
