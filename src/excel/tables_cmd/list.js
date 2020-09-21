@@ -36,7 +36,7 @@ async function handler(args) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
 
-  const od = getOneDriveClient();
+  const od = await getOneDriveClient();
   const driveItem = getDriveItem(state.root);
   const workbook = await od.getWorkbook(driveItem);
   const names = await workbook.getTableNames();

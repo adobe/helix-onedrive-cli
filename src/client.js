@@ -12,7 +12,7 @@
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const { OneDrive } = require('@adobe/helix-onedrive-support');
-const { info, SimpleInterface } = require('@adobe/helix-log');
+const { debug, info, SimpleInterface } = require('@adobe/helix-log');
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
@@ -43,7 +43,7 @@ let client = null;
  *
  * @returns {OneDrive} OneDrive client
  */
-function getOneDriveClient() {
+async function getOneDriveClient() {
   if (client) {
     return client;
   }
@@ -63,33 +63,30 @@ function getOneDriveClient() {
     info(chalk`AZURE_APP_CLIENT_SECRET={gray <client-secret of the app>}`);
     process.exit(-1);
   }
-  let tokens = {};
+  let tokens = [];
   try {
-    tokens = JSON.parse(fs.readFileSync(AUTH_FILE, 'utf-8'));
+    tokens = await fs.readJson(AUTH_FILE, 'utf-8');
   } catch (e) {
     // ignore
   }
-
-  const {
-    accessToken,
-    expiresOn,
-  } = tokens;
-
   client = new OneDrive({
     clientId,
     clientSecret,
-    refreshToken: refreshToken || tokens.refreshToken,
+    refreshToken,
     tenant,
     username,
     password,
-    accessToken,
-    expiresOn,
     log: new SimpleInterface({ level: 'trace' }),
   });
+
+  await client.loadTokenCache(tokens);
+
   // register event handle to write back tokens.
   client.on('tokens', (newTokens) => {
-    fs.writeFileSync(AUTH_FILE, JSON.stringify(newTokens, null, 2), 'utf-8');
-    info(`updated ${AUTH_FILE} file.`);
+    // don't store the tokens w/o refresh token
+    const validTokens = newTokens.filter((tok) => tok.refreshToken);
+    fs.writeFileSync(AUTH_FILE, JSON.stringify(validTokens, null, 2), 'utf-8');
+    debug(`updated ${AUTH_FILE} file.`);
   });
   return client;
 }
