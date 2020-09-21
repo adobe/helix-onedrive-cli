@@ -304,6 +304,8 @@ async function deleteSubscription(args) {
 }
 
 async function poll(args) {
+  const { skip } = args;
+
   const state = await loadState();
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
@@ -312,16 +314,24 @@ async function poll(args) {
   const od = await getOneDriveClient();
   const resource = `/drives/${state.root.split('/')[2]}/root`;
 
-  info('Fetching initial drive contents, this might take a while...');
-  const initial = await od.fetchChanges(resource);
-  const pathCache = initial.changes.filter(
-    (item) => item.id && item.file && item.name && item.parentReference,
-  ).reduce((map, item) => {
-    const [, parent] = item.parentReference.path.split(':');
-    map.set(item.id, `${parent}/${item.name}`);
-    return map;
-  }, new Map());
-  let nextToken = initial.token;
+  const pathCache = new Map();
+  let nextToken;
+
+  if (!skip) {
+    info('Fetching initial drive contents, this might take a while...');
+    const initial = await od.fetchChanges(resource);
+    initial.changes.filter(
+      (item) => item.id && item.file && item.name && item.parentReference,
+    ).reduce((map, item) => {
+      const [, parent] = item.parentReference.path.split(':');
+      map.set(item.id, `${parent}/${item.name}`);
+      return map;
+    }, pathCache);
+    nextToken = initial.token;
+  } else {
+    const initial = await od.fetchChanges(resource, 'latest');
+    nextToken = initial.token;
+  }
 
   info('Polling for changes, enter Ctrl-c to exit.');
   process.on('SIGINT', () => {
@@ -344,7 +354,7 @@ async function poll(args) {
         ? `${change.parentReference.path.split(':')[1]}/${change.name}` : null;
 
       if (change.deleted) {
-        info(chalk`{red - ${cachedPath}}`);
+        info(chalk`{red - ${cachedPath || 'unknown'}}`);
         pathCache.delete(change.id);
       } else if (!cachedPath) {
         info(chalk`{green + ${changePath}}`);
