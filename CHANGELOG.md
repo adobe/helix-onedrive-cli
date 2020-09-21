@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.5.6...v1.6.0) (2020-09-21)
+
+
+### Features
+
+* use new onedrive support ([#55](https://github.com/adobe/helix-onedrive-cli/issues/55)) ([b605c66](https://github.com/adobe/helix-onedrive-cli/commit/b605c66e0331b28dea9807719f1266056a9c6ede))
+
 ## [1.5.6](https://github.com/adobe/helix-onedrive-cli/compare/v1.5.5...v1.5.6) (2020-09-21)
 
 
