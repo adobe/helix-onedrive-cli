@@ -78,5 +78,5 @@ workflows:
         - build
         filters:
           branches:
-            # rename to `master` once the tokens have been setup
-            only: master
+            # rename to `main` once the tokens have been setup
+            only: main

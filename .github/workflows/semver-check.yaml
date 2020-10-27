@@ -1,7 +1,7 @@
 on:
   push:
     branches-ignore:
-      - 'master'
+      - 'main'
 
 jobs:
   ci_trigger:
@@ -10,6 +10,6 @@ jobs:
     steps:
       - name: Comment
         id: comment
-        uses: adobe-rnd/github-semantic-release-comment-action@master
+        uses: adobe-rnd/github-semantic-release-comment-action@main
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
