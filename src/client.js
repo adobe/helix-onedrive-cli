@@ -50,7 +50,6 @@ async function getOneDriveClient() {
   const {
     AZURE_APP_CLIENT_ID: clientId = DEFAULT_CLIENT_ID,
     AZURE_APP_CLIENT_SECRET: clientSecret = '',
-    AZURE_APP_REFRESH_TOKEN: refreshToken = '',
     AZURE_APP_TENANT: tenant = '',
     AZURE_APP_USER: username = '',
     AZURE_APP_PASS: password = '',
@@ -69,6 +68,15 @@ async function getOneDriveClient() {
   } catch (e) {
     // ignore
   }
+
+  let {
+    AZURE_APP_REFRESH_TOKEN: refreshToken = '',
+  } = process.env;
+
+  if (!refreshToken && tokens.length) {
+    refreshToken = tokens[0].refreshToken;
+  }
+
   client = new OneDrive({
     clientId,
     clientSecret,
