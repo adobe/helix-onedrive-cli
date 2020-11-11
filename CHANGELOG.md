@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.3...v1.6.4) (2020-11-11)
+
+
+### Bug Fixes
+
+* use refresh token if available ([#93](https://github.com/adobe/helix-onedrive-cli/issues/93)) ([8ef4429](https://github.com/adobe/helix-onedrive-cli/commit/8ef4429b529b8cfe4bb3423a59d02827648f8128))
+
 ## [1.6.3](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.2...v1.6.3) (2020-10-26)
 
 
