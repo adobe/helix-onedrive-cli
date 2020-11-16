@@ -44,10 +44,12 @@ async function prompt(msg, hide = false) {
 
 async function login(username, password) {
   const od = await getOneDriveClient();
-  const tokenResponse = await od.getAccessToken();
-  if (tokenResponse.refreshToken) {
-    info('already logged in.');
-    return;
+  if (od.refreshToken) {
+    const tokenResponse = await od.getAccessToken();
+    if (tokenResponse.refreshToken) {
+      info('already logged in.');
+      return;
+    }
   }
   if (username !== undefined) {
     if (!username) {
@@ -64,15 +66,14 @@ async function login(username, password) {
     }
     od.username = username;
     od.password = password;
-    await od.getAccessToken();
-    const result = await od.me();
-    info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
-    return;
+  } else {
+    await od.login(async (code) => {
+      await openBrowser(code.verificationUrl);
+    });
   }
 
-  await od.login(async (code) => {
-    await openBrowser(code.verificationUrl);
-  });
+  const result = await od.me();
+  info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
 }
 
 async function logout() {
