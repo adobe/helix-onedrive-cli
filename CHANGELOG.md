@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.5...v1.6.6) (2020-11-16)
+
+
+### Bug Fixes
+
+* **login:** login with device code or username doesn't work ([#100](https://github.com/adobe/helix-onedrive-cli/issues/100)) ([ea4f4cc](https://github.com/adobe/helix-onedrive-cli/commit/ea4f4cc697b70cb8582924261e24abdc94c40689)), closes [#94](https://github.com/adobe/helix-onedrive-cli/issues/94) [#95](https://github.com/adobe/helix-onedrive-cli/issues/95)
+
 ## [1.6.5](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.4...v1.6.5) (2020-11-16)
 
 
