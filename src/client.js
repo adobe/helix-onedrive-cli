@@ -16,7 +16,8 @@ const { debug, info, SimpleInterface } = require('@adobe/helix-log');
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
-const DEFAULT_CLIENT_ID = 'f4c79ff7-bbd2-4b36-822e-a89eb6de4578';
+// default client id is from microsoft's adal client
+const DEFAULT_CLIENT_ID = '04b07795-8ddb-461a-bbee-02f9e1bf7b46';
 
 let state = {};
 
