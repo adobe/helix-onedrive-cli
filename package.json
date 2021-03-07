@@ -33,7 +33,7 @@
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "fs-extra": "9.1.0",
-    "open": "7.4.2",
+    "open": "8.0.2",
     "yargs": "16.2.0"
   },
   "devDependencies": {
