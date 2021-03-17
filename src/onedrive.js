@@ -14,7 +14,9 @@ const path = require('path');
 const chalk = require('chalk');
 const openBrowser = require('open');
 const readline = require('readline');
-const { info, debug } = require('@adobe/helix-log');
+const { URLSearchParams } = require('url');
+const { error, info, debug } = require('@adobe/helix-log');
+const { MountConfig } = require('@adobe/helix-shared');
 const {
   getState, loadState, saveState, getOneDriveClient,
 } = require('./client.js');
@@ -251,8 +253,32 @@ async function upload(args) {
 }
 
 async function createSubscription(args) {
-  const { resource, url } = args;
+  const { owner, repo, ref } = args;
   const od = await getOneDriveClient();
+
+  const config = (await new MountConfig()
+    .withRepo(owner, repo, ref)
+    .init()).toJSON();
+
+  const mountpoints = Object.values(config.mountpoints)
+    .filter((v) => v.match(/https:\/\/[^.]+\.sharepoint.com/));
+  if (mountpoints.length === 0) {
+    error('No OneDrive mountpoints found.');
+    return;
+  }
+  const [mountpoint] = mountpoints;
+  info(chalk`Resolving shared link for {yellow ${mountpoint}}`);
+  const { parentReference: { path: parentPath } } = await od.resolveShareLink(mountpoint);
+  const [resource] = parentPath.split(':');
+  info(chalk`Resolved resource: {yellow ${resource}}`);
+
+  const actionPrefix = args['action-prefix'];
+  const params = new URLSearchParams();
+  params.append('owner', owner);
+  params.append('repo', repo);
+  params.append('ref', ref);
+  const url = `${actionPrefix}?${params.toString()}`;
+
   const result = await od.createSubscription({
     resource,
     notificationUrl: url,
