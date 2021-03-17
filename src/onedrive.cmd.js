@@ -78,7 +78,7 @@ function install(yargs) {
         })
         .command({
           command: 'create <owner> <repo> <ref> <client-state>',
-          desc: 'create a subscription (new).',
+          desc: 'create a subscription.',
           handler: onedrive.createSubscription,
           builder: (z) => z
             .option('action-prefix', {
