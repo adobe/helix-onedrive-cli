@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.15...v1.7.0) (2021-03-18)
+
+
+### Features
+
+* **subscription:** make create subscription less technical ([#133](https://github.com/adobe/helix-onedrive-cli/issues/133)) ([d4c1532](https://github.com/adobe/helix-onedrive-cli/commit/d4c153275e9081b7b4565732e34f749865c0b0f6))
+
 ## [1.6.15](https://github.com/adobe/helix-onedrive-cli/compare/v1.6.14...v1.6.15) (2021-03-07)
 
 
