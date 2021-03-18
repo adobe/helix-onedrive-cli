@@ -12,6 +12,9 @@
  * governing permissions and limitations under the License.
  */
 
+// tell helix-fetch to avoid using persistent H2 connections that would keep us alive
+process.env.HELIX_FETCH_FORCE_HTTP1 = true;
+
 const CLI = require('./cli.js');
 require('dotenv').config();
 

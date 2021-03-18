@@ -77,9 +77,16 @@ function install(yargs) {
           handler: onedrive.listSubscriptions,
         })
         .command({
-          command: 'create <resource> <url> <client-state>',
+          command: 'create <owner> <repo> <ref> <client-state>',
           desc: 'create a subscription.',
           handler: onedrive.createSubscription,
+          builder: (z) => z
+            .option('action-prefix', {
+              alias: 'p',
+              type: 'string',
+              description: 'Runtime action prefix',
+              default: 'https://adobeioruntime.net/api/v1/web/helix-index/helix-observation/onedrive-listener@latest/hook',
+            }),
         })
         .command({
           command: 'refresh <id>',
