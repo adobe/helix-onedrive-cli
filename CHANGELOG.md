@@ -1,3 +1,10 @@
+## [1.7.12](https://github.com/adobe/helix-onedrive-cli/compare/v1.7.11...v1.7.12) (2021-05-03)
+
+
+### Bug Fixes
+
+* **deps:** use helix shared modules ([36ab78e](https://github.com/adobe/helix-onedrive-cli/commit/36ab78eeb7dba4ff4f515bb79f0dc03ca1cfd95f))
+
 ## [1.7.11](https://github.com/adobe/helix-onedrive-cli/compare/v1.7.10...v1.7.11) (2021-05-03)
 
 
