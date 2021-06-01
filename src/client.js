@@ -85,6 +85,7 @@ async function getOneDriveClient() {
     tenant,
     username,
     password,
+    localAuthCache: true,
     log: new SimpleInterface({ level: 'trace' }),
   });
 
