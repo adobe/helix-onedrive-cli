@@ -1,3 +1,10 @@
+## [1.7.24](https://github.com/adobe/helix-onedrive-cli/compare/v1.7.23...v1.7.24) (2021-06-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency open to v8.2.1 ([c59c17c](https://github.com/adobe/helix-onedrive-cli/commit/c59c17ca4334c095c82e1e565868b5c2640ece6f))
+
 ## [1.7.23](https://github.com/adobe/helix-onedrive-cli/compare/v1.7.22...v1.7.23) (2021-06-13)
 
 
