@@ -81,11 +81,24 @@ function install(yargs) {
           desc: 'create a subscription.',
           handler: onedrive.createSubscription,
           builder: (z) => z
-            .option('action-prefix', {
-              alias: 'p',
+            .option('target', {
               type: 'string',
-              description: 'Runtime action prefix',
-              default: 'https://adobeioruntime.net/api/v1/web/helix-index/helix-observation/onedrive-listener@latest/hook',
+              description: 'Target cloud, possible values are AWS and Runtime',
+              default: 'aws',
+            })
+            .option('aws-region', {
+              type: 'string',
+              description: 'AWS region to use',
+              default: 'us-east-1',
+            })
+            .option('aws-api', {
+              type: 'string',
+              description: 'AWS API gateway to use',
+            })
+            .option('action-version', {
+              type: 'string',
+              description: 'Action version to use',
+              default: 'v1',
             }),
         })
         .command({
@@ -94,7 +107,7 @@ function install(yargs) {
           handler: onedrive.refreshSubscription,
         })
         .command({
-          command: 'delete <id>',
+          command: ['delete <id>', 'rm'],
           desc: 'delete a subscription.',
           handler: onedrive.deleteSubscription,
         }),

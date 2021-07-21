@@ -253,7 +253,9 @@ async function upload(args) {
 }
 
 async function createSubscription(args) {
-  const { owner, repo, ref } = args;
+  const {
+    owner, repo, ref, target,
+  } = args;
   const od = await getOneDriveClient();
 
   const config = (await new MountConfig()
@@ -272,12 +274,24 @@ async function createSubscription(args) {
   const [resource] = parentPath.split(':');
   info(chalk`Resolved resource: {yellow ${resource}}`);
 
-  const actionPrefix = args['action-prefix'];
+  let prefix;
+  const version = args['action-version'];
+  if (target === 'AWS') {
+    const region = args['aws-region'];
+    const api = args['aws-api'];
+    if (!api) {
+      error('No AWS API Gateway endpoint specified.');
+      return;
+    }
+    prefix = `https://${api}.execute-api.${region}.amazonaws.com/helix-observation/onedrive-listener/${version}/hook`;
+  } else {
+    prefix = `https://adobeioruntime.net/api/v1/web/helix-index/helix-observation/onedrive-listener@${version}/hook`;
+  }
   const params = new URLSearchParams();
   params.append('owner', owner);
   params.append('repo', repo);
   params.append('ref', ref);
-  const url = `${actionPrefix}?${params.toString()}`;
+  const url = `${prefix}?${params.toString()}`;
 
   const result = await od.createSubscription({
     resource,
