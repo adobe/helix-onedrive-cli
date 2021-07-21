@@ -276,7 +276,7 @@ async function createSubscription(args) {
 
   let prefix;
   const version = args['action-version'];
-  if (target === 'AWS') {
+  if (target === 'aws') {
     const region = args['aws-region'];
     const api = args['aws-api'];
     if (!api) {
