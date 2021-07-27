@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.1...v1.8.2) (2021-07-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared-config to v1.1.11 ([2912bcc](https://github.com/adobe/helix-onedrive-cli/commit/2912bcc1ebed45fc9e13ee822cdddb6bfe24c74a))
+
 ## [1.8.1](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.0...v1.8.1) (2021-07-27)
 
 
