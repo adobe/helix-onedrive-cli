@@ -1,3 +1,10 @@
+## [1.8.15](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.14...v1.8.15) (2021-09-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-log to v5.0.5 ([#202](https://github.com/adobe/helix-onedrive-cli/issues/202)) ([5336bc0](https://github.com/adobe/helix-onedrive-cli/commit/5336bc0efb7d2200d2156a6e78cfd5dc1ce0e1e3))
+
 ## [1.8.14](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.13...v1.8.14) (2021-09-17)
 
 
