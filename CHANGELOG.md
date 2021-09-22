@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.16...v1.9.0) (2021-09-22)
+
+
+### Features
+
+* add columns ls <table> ([#205](https://github.com/adobe/helix-onedrive-cli/issues/205)) ([90acafc](https://github.com/adobe/helix-onedrive-cli/commit/90acafc286ed5869595e20c8bd26d2fe0968953c))
+
 ## [1.8.16](https://github.com/adobe/helix-onedrive-cli/compare/v1.8.15...v1.8.16) (2021-09-20)
 
 
