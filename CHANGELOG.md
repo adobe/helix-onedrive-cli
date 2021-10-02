@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.2...v1.9.3) (2021-10-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency yargs to v17.2.1 ([fb1e3d9](https://github.com/adobe/helix-onedrive-cli/commit/fb1e3d989db6336987ea81fd25a5239489e6563a))
+
 ## [1.9.2](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.1...v1.9.2) (2021-09-27)
 
 
