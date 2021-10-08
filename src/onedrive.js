@@ -249,7 +249,9 @@ async function upload(args) {
   const od = await getOneDriveClient();
   info(chalk`uploading {yellow ${path.relative('.', src)}} to {yellow ${dst}}`);
   const buf = await fs.readFile(src);
-  await od.uploadDriveItem(buf, driveItem, dst);
+  const item = await od.uploadDriveItem(buf, driveItem, dst);
+
+  process.stdout.write(chalk` {yellow ${item.id}} /${item.name}\n`);
 }
 
 async function createSubscription(args) {
