@@ -1,3 +1,11 @@
+## [1.9.6](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.5...v1.9.6) (2021-10-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v6 ([#217](https://github.com/adobe/helix-onedrive-cli/issues/217)) ([416567c](https://github.com/adobe/helix-onedrive-cli/commit/416567c4a4306fad375289a75d3e079a29f34238))
+* use new helix-onedrive-support and return value from uploadDriveItem ([#215](https://github.com/adobe/helix-onedrive-cli/issues/215)) ([87ee04a](https://github.com/adobe/helix-onedrive-cli/commit/87ee04a2aff31cfc1312ed3cac3b146860689779))
+
 ## [1.9.5](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.4...v1.9.5) (2021-10-08)
 
 
