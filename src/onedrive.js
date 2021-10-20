@@ -15,8 +15,8 @@ const chalk = require('chalk');
 const openBrowser = require('open');
 const readline = require('readline');
 const { URLSearchParams } = require('url');
-const { error, info, debug } = require('@adobe/helix-log');
 const { MountConfig } = require('@adobe/helix-shared-config');
+const { error, info, debug } = require('./logging.js');
 const {
   getState, loadState, saveState, getOneDriveClient,
 } = require('./client.js');

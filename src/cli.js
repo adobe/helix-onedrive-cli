@@ -15,7 +15,7 @@
 'use strict';
 
 const yargs = require('yargs');
-const { rootLogger } = require('@adobe/helix-log');
+const { logger } = require('./logging.js');
 
 const MIN_MSG = 'You need at least one command.';
 
@@ -43,7 +43,7 @@ class CLI {
       })
       .middleware((args) => {
         if (args.verbose) {
-          rootLogger.loggers.get('default').level = 'debug';
+          logger.level = 'debug';
         }
         return args;
       })

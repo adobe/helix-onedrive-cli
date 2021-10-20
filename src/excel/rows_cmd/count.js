@@ -13,7 +13,7 @@
 'use strict';
 
 const chalk = require('chalk');
-const { info } = require('@adobe/helix-log');
+const { info } = require('../../logging.js');
 
 const {
   loadState, getOneDriveClient,
