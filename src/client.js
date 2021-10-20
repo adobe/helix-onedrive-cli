@@ -12,7 +12,9 @@
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const { OneDrive } = require('@adobe/helix-onedrive-support');
-const { debug, info, SimpleInterface } = require('@adobe/helix-log');
+const { logger } = require('./logging.js');
+
+const { debug, info } = logger;
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
@@ -86,7 +88,7 @@ async function getOneDriveClient() {
     username,
     password,
     localAuthCache: true,
-    log: new SimpleInterface({ level: 'trace' }),
+    log: logger,
   });
 
   await client.loadTokenCache(tokens);
