@@ -12,7 +12,7 @@
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const { OneDrive } = require('@adobe/helix-onedrive-support');
-const { logger } = require('./logging.js');
+const logger = require('./logging.js');
 
 const { debug, info } = logger;
 
