@@ -1,3 +1,10 @@
+## [1.9.12](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.11...v1.9.12) (2021-10-25)
+
+
+### Bug Fixes
+
+* fix use of wrong logger ([#230](https://github.com/adobe/helix-onedrive-cli/issues/230)) ([c1ebb51](https://github.com/adobe/helix-onedrive-cli/commit/c1ebb510a39bdd47007905c86f8c114bf648d401))
+
 ## [1.9.11](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.10...v1.9.11) (2021-10-25)
 
 
