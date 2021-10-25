@@ -15,7 +15,7 @@
 'use strict';
 
 const yargs = require('yargs');
-const { logger } = require('./logging.js');
+const logger = require('./logging.js');
 
 const MIN_MSG = 'You need at least one command.';
 
