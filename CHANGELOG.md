@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.12...v1.10.0) (2021-11-03)
+
+
+### Features
+
+* add range command to sheets ([#232](https://github.com/adobe/helix-onedrive-cli/issues/232)) ([2d3d3ab](https://github.com/adobe/helix-onedrive-cli/commit/2d3d3ab8513da1641e8e7673a4e6db36568c2cef))
+
 ## [1.9.12](https://github.com/adobe/helix-onedrive-cli/compare/v1.9.11...v1.9.12) (2021-10-25)
 
 
