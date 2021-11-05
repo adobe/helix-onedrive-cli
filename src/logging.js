@@ -16,6 +16,7 @@ const logger = new SimpleInterface({ logger: rootLogger });
 
 module.exports = {
   logger,
+  trace: logger.trace.bind(logger),
   debug: logger.debug.bind(logger),
   info: logger.info.bind(logger),
   warn: logger.warn.bind(logger),

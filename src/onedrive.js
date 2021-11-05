@@ -70,7 +70,7 @@ async function login(username, password) {
     od.password = password;
   } else {
     await od.login(async (code) => {
-      await openBrowser(code.verificationUrl);
+      await openBrowser(code.verificationUri);
     });
   }
 
