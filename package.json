@@ -27,7 +27,7 @@
   "dependencies": {
     "@adobe/helix-log": "6.0.0",
     "@adobe/helix-onedrive-support": "6.0.1",
-    "@adobe/helix-shared-config": "1.4.6",
+    "@adobe/helix-shared-config": "1.4.7",
     "chalk": "4.1.2",
     "cookie-parser": "1.4.5",
     "dotenv": "10.0.0",
