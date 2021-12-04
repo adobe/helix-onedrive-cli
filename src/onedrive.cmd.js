@@ -9,13 +9,13 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { loadCommands } from './utils.js';
+import onedrive from './onedrive.js';
 
-'use strict';
-
-const onedrive = require('./onedrive.js');
-
-function install(yargs) {
-  return yargs
+export default async function install(yargs) {
+  yargs
     .command({
       command: 'me',
       desc: 'Show information about the logged in user.',
@@ -122,8 +122,7 @@ function install(yargs) {
         description: 'Skip initial building of path hierarchy',
         default: false,
       }),
-    })
-    .commandDir('excel');
+    });
+  await loadCommands(yargs, resolve(fileURLToPath(import.meta.url), '..', 'excel'));
+  return yargs;
 }
-
-module.exports = install;

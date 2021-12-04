@@ -9,10 +9,15 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-Object.assign(exports, {
+import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { loadCommands } from '../utils.js';
+
+export default {
   command: 'sheets <command>',
   desc: 'Execute commands related to work sheets in Excel',
-  builder: (y) => y
-    .commandDir('sheets_cmd'),
+  builder: async (y) => {
+    await loadCommands(y, resolve(fileURLToPath(import.meta.url), '..', 'sheets_cmd'));
+  },
   handler: () => {},
-});
+};
