@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-onedrive-cli",
-  "version": "1.10.7",
+  "version": "1.10.9",
   "description": "Helix OneDrive CLI",
   "main": "src/index.js",
   "type": "module",
@@ -12,7 +12,8 @@
     "test": "c8 --reporter=text --reporter=lcov --check-coverage --branches 4 --statements 20 --lines 20 mocha",
     "test-ci": "c8 --reporter=text --reporter=lcov --check-coverage --branches 4 --statements 20 --lines 20 mocha --reporter xunit --reporter-options output=./junit/test-results.xml && codecov",
     "lint": "eslint .",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -26,8 +27,8 @@
   "dependencies": {
     "@adobe/helix-log": "6.0.0",
     "@adobe/helix-onedrive-support": "6.0.1",
-    "@adobe/helix-shared-config": "1.6.0",
     "chalk-template": "0.2.0",
+    "@adobe/helix-shared-config": "1.7.0",
     "cookie-parser": "1.4.6",
     "dotenv": "10.0.0",
     "express": "4.17.1",
