@@ -9,14 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-'use strict';
-
-const chalk = require('chalk');
-
-const {
-  loadState, getOneDriveClient,
-} = require('../../client.js');
+import chalk from 'chalk-template';
+import { getOneDriveClient, loadState } from '../../client.js';
 
 function getDriveItem(url) {
   // todo: parse better
@@ -48,8 +42,8 @@ async function handler(args) {
   }));
 }
 
-Object.assign(exports, {
+export default {
   command: ['delete <names...>', 'rm'],
   desc: 'delete a name in a work book or work sheet',
   handler: (y) => handler(y),
-});
+};

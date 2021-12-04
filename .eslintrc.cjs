@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
+ * Copyright 2019 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,21 +9,23 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-import { resolve } from 'path';
-import { fileURLToPath } from 'url';
-import { loadCommands } from '../utils.js';
 
-export default {
-  command: 'names <command>',
-  desc: 'Execute commands related to named items in Excel',
-  builder: async (y) => {
-    await loadCommands(y, resolve(fileURLToPath(import.meta.url), '..', 'names_cmd'));
-    y.option('s', {
-      alias: 'sheet',
-      type: 'string',
-      description: 'Worksheet to operate on',
-      default: null,
-    });
+module.exports = {
+  root: true,
+  extends: '@adobe/helix',
+  env: {
+    node: true,
+    es6: true,
   },
-  handler: () => {},
+  parserOptions: {
+    sourceType: 'module',
+    ecmaVersion: 2020,
+  },
+  rules: {
+    'import/extensions': 0,
+    'import/prefer-default-export': 0,
+  },
+  globals: {
+    "__rootdir": true,
+  },
 };

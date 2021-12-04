@@ -9,15 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-'use strict';
-
-const chalk = require('chalk');
-const { info } = require('../../logging.js');
-
-const {
-  loadState, getOneDriveClient,
-} = require('../../client.js');
+import chalk from 'chalk-template';
+import { info } from '../../logging.js';
+import { getOneDriveClient, loadState } from '../../client.js';
 
 function getDriveItem(url) {
   // todo: parse better
@@ -50,7 +44,7 @@ async function handler(args) {
   info(chalk`{yellow ${JSON.stringify(values, undefined, 2)}}`);
 }
 
-Object.assign(exports, {
+export default {
   command: ['range <sheet-name>', 'r'],
   desc: 'returns a range in a sheet',
   builder: (y) => y
@@ -60,4 +54,4 @@ Object.assign(exports, {
       description: 'address range (e.g. A1:C2)',
     }),
   handler: (y) => handler(y),
-});
+};
