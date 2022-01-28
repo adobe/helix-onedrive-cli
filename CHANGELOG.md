@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/adobe/helix-onedrive-cli/compare/v1.10.18...v1.11.0) (2022-01-28)
+
+
+### Features
+
+* use new sharepoint API on demand ([#265](https://github.com/adobe/helix-onedrive-cli/issues/265)) ([36d250d](https://github.com/adobe/helix-onedrive-cli/commit/36d250d2acf24ef9958b7707db966aa845bf2873))
+
 ## [1.10.18](https://github.com/adobe/helix-onedrive-cli/compare/v1.10.17...v1.10.18) (2022-01-28)
 
 
