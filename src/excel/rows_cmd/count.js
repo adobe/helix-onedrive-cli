@@ -9,15 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-'use strict';
-
-const chalk = require('chalk');
-const { info } = require('../../logging.js');
-
-const {
-  loadState, getOneDriveClient,
-} = require('../../client.js');
+import chalk from 'chalk-template';
+import { info } from '../../logging.js';
+import { getOneDriveClient, loadState } from '../../client.js';
 
 function getDriveItem(url) {
   // todo: parse better
@@ -46,8 +40,8 @@ async function handler(args) {
   info(chalk`{yellow ${count}}`);
 }
 
-Object.assign(exports, {
+export default {
   command: ['count <table-name>'],
   desc: 'Shows number of rows in a table',
   handler: (y) => handler(y),
-});
+};

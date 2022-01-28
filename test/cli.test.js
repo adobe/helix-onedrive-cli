@@ -11,10 +11,7 @@
  */
 
 /* eslint-env mocha */
-
-'use strict';
-
-const CLI = require('../src/cli.js');
+import CLI from '../src/cli.js';
 
 describe('CLI Tests', () => {
   it('CLI can be invoked wit default arguments', async () => {

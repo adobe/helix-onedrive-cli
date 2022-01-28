@@ -9,8 +9,16 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import path from 'path';
+import fs from 'fs/promises';
 
-module.exports = {
-  root: true,
-  extends: '@adobe/helix',
-};
+export async function loadCommands(yargs, dir) {
+  const d = await fs.readdir(dir);
+  for (const filename of d) {
+    if (filename.endsWith('.js')) {
+      // eslint-disable-next-line no-await-in-loop
+      const cmd = (await import(path.resolve(dir, filename))).default;
+      yargs.command(cmd);
+    }
+  }
+}

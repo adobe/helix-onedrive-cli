@@ -9,12 +9,10 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-const fs = require('fs-extra');
-const chalk = require('chalk');
-const { OneDrive } = require('@adobe/helix-onedrive-support');
-const logger = require('./logging.js');
-
-const { debug, info } = logger;
+import fs from 'fs-extra';
+import chalk from 'chalk-template';
+import { OneDrive } from '@adobe/helix-onedrive-support';
+import { logger, debug, info } from './logging.js';
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
@@ -23,11 +21,11 @@ const DEFAULT_CLIENT_ID = '04b07795-8ddb-461a-bbee-02f9e1bf7b46';
 
 let state = {};
 
-function getState() {
+export function getState() {
   return state;
 }
 
-async function loadState() {
+export async function loadState() {
   try {
     state = await fs.readJson(STATE_FILE);
   } catch (e) {
@@ -35,7 +33,7 @@ async function loadState() {
   }
   return state;
 }
-async function saveState() {
+export async function saveState() {
   await fs.writeJson(STATE_FILE, state);
 }
 
@@ -46,7 +44,7 @@ let client = null;
  *
  * @returns {OneDrive} OneDrive client
  */
-async function getOneDriveClient() {
+export async function getOneDriveClient() {
   if (client) {
     return client;
   }
@@ -102,10 +100,3 @@ async function getOneDriveClient() {
   });
   return client;
 }
-
-module.exports = {
-  getState,
-  loadState,
-  saveState,
-  getOneDriveClient,
-};

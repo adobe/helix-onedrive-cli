@@ -11,15 +11,12 @@
  */
 
 /* eslint-disable global-require, no-console */
-
-'use strict';
-
-const yargs = require('yargs');
-const logger = require('./logging.js');
+import yargs from 'yargs';
+import { logger } from './logging.js';
 
 const MIN_MSG = 'You need at least one command.';
 
-class CLI {
+export default class CLI {
   constructor(plugins = []) {
     this._failFn = (message, err, argv) => {
       const msg = err ? err.message : message;
@@ -32,9 +29,9 @@ class CLI {
     this._plugins = plugins;
   }
 
-  run(argv) {
+  async run(argv) {
     const y = yargs();
-    this._plugins.forEach((p) => p(y));
+    await Promise.all(this._plugins.map(async (p) => p(y)));
     return y
       .option('verbose', {
         alias: 'v',
@@ -47,7 +44,7 @@ class CLI {
         }
         return args;
       })
-      .wrap(yargs.terminalWidth())
+      .wrap(y.terminalWidth())
       .fail(this._failFn)
       .exitProcess(false)
       .strict()
@@ -57,5 +54,3 @@ class CLI {
       .parse(argv);
   }
 }
-
-module.exports = CLI;

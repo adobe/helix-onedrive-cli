@@ -9,15 +9,12 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-const { createDefaultLogger, SimpleInterface } = require('@adobe/helix-log');
+import { createDefaultLogger, SimpleInterface } from '@adobe/helix-log';
 
 const rootLogger = createDefaultLogger();
-const logger = new SimpleInterface({ logger: rootLogger });
 
-module.exports = {
-  logger,
-  debug: logger.debug.bind(logger),
-  info: logger.info.bind(logger),
-  warn: logger.warn.bind(logger),
-  error: logger.error.bind(logger),
-};
+export const logger = new SimpleInterface({ logger: rootLogger });
+export const debug = logger.debug.bind(logger);
+export const info = logger.info.bind(logger);
+export const warn = logger.warn.bind(logger);
+export const error = logger.error.bind(logger);

@@ -13,11 +13,10 @@
  */
 
 // tell helix-fetch to avoid using persistent H2 connections that would keep us alive
+import CLI from './cli.js';
+import { config } from 'dotenv';
+import cmdsOneDrive from './onedrive.cmd.js';
+
 process.env.HELIX_FETCH_FORCE_HTTP1 = true;
-
-const CLI = require('./cli.js');
-require('dotenv').config();
-
-const cmdsOneDrive = require('./onedrive.cmd.js');
-
+config();
 new CLI([cmdsOneDrive]).run(process.argv.slice(2));

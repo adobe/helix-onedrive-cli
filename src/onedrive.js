@@ -9,17 +9,17 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-const fs = require('fs-extra');
-const path = require('path');
-const chalk = require('chalk');
-const openBrowser = require('open');
-const readline = require('readline');
-const { URLSearchParams } = require('url');
-const { MountConfig } = require('@adobe/helix-shared-config');
-const { error, info, debug } = require('./logging.js');
-const {
-  getState, loadState, saveState, getOneDriveClient,
-} = require('./client.js');
+import fs from 'fs-extra';
+import path from 'path';
+import chalk from 'chalk-template';
+import openBrowser from 'open';
+import readline from 'readline';
+import { URLSearchParams } from 'url';
+import { MountConfig } from '@adobe/helix-shared-config';
+import { debug, error, info } from './logging.js';
+import {
+  getOneDriveClient, getState, loadState, saveState,
+} from './client.js';
 
 const AUTH_FILE = '.auth.json';
 
@@ -487,7 +487,7 @@ async function poll(args) {
   }
 }
 
-module.exports = {
+export default {
   me,
   resolve,
   ls,

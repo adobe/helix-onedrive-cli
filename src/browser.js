@@ -10,11 +10,13 @@
  * governing permissions and limitations under the License.
  */
 /* eslint-disable no-console */
-const crypto = require('crypto');
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const { getOneDriveClient } = require('./client.js');
-require('dotenv').config();
+import crypto from 'crypto';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import { config } from 'dotenv';
+import { getOneDriveClient } from './client.js';
+
+config();
 
 const redirectUri = 'http://localhost:4502/token';
 
