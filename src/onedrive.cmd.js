@@ -49,17 +49,29 @@ function install(yargs) {
     .command({
       command: 'ls [path]',
       desc: 'Lists the contents of the [path]',
-      handler: onedrive.ls,
+      builder: (y) => y
+        .option('sharepoint', {
+          alias: 's',
+          type: 'boolean',
+          description: 'Use the SharePoint API.',
+        }),
+      handler: (y) => onedrive.ls(y),
     })
     .command({
       command: 'get <path> [local]',
       desc: 'downloads the file at path',
       handler: onedrive.download,
-      builder: (y) => y.option('recursive', {
-        alias: 'r',
-        type: 'boolean',
-        description: 'Download recursively',
-      }),
+      builder: (y) => y
+        .option('sharepoint', {
+          alias: 's',
+          type: 'boolean',
+          description: 'Use the SharePoint API.',
+        })
+        .option('recursive', {
+          alias: 'r',
+          type: 'boolean',
+          description: 'Download recursively',
+        }),
     })
     .command({
       command: 'put <local> [path]]',

@@ -104,6 +104,7 @@ async function resolve(args) {
   info(chalk`    URL: {yellow ${webUrl}}`);
   info(chalk`DriveId: {yellow ${driveId}}`);
   const state = await getState();
+  state.link = link;
   state.root = canonicalPath;
   state.cwd = '/';
   await saveState();
@@ -121,6 +122,38 @@ async function getDriveItem(url) {
   };
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function dateFormat(s) {
+  const d = new Date(s);
+  const date = `${MONTHS[d.getMonth()]} ${d.getDate().toString().padStart(2, ' ')}`;
+  const time = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}`;
+  return `${date} ${time}`;
+}
+
+function graphApiFormatter(item) {
+  const user = item.lastModifiedBy.user.email;
+  const date = item.lastModifiedDateTime;
+  const size = item.folder?.childCount ?? item.size;
+  let { name } = item;
+  if (item.folder) {
+    name = chalk`{blue ${name}}`;
+  }
+  return `${user.padEnd(18, ' ')}${size.toString().padStart(10, ' ')} ${dateFormat(date)} ${name}\n`;
+}
+
+function sharePointApiFormatter(item) {
+  const user = item.ModifiedBy?.UserPrincipalName ?? '';
+  const date = item.TimeLastModified;
+  const size = item.ItemCount ?? item.Length;
+  let { Name: name } = item;
+
+  if (item.ItemCount) {
+    name = chalk`{blue ${name}}`;
+  }
+  return `${user.padEnd(18, ' ')}${size.toString().padStart(10, ' ')} ${dateFormat(date)} ${name}\n`;
+}
+
 async function ls(args) {
   const state = await loadState();
   if (!state.root) {
@@ -129,19 +162,49 @@ async function ls(args) {
   if (args.path && args.path.startsWith('https://')) {
     throw Error(chalk`${args._[0]} does not work on share links directly. use '{grey ${args.$0} resolve}' to set root.`);
   }
-  const p = path.posix.join(state.cwd, args.path || '');
-  const driveItem = await getDriveItem(state.root);
-  // console.log(driveItem);
-  process.stdout.write(chalk`{gray ${state.root}}\n`);
-  const od = await getOneDriveClient();
-  const result = await od.listChildren(driveItem, p);
-  result.value.forEach((item) => {
-    let itemPath = path.posix.join(p, item.name);
-    if (item.folder) {
-      itemPath = chalk`{blue ${itemPath}/}`;
+
+  const children = [];
+  let formatter;
+
+  if (args.sharepoint) {
+    const od = await getOneDriveClient();
+    const site = await od.getSite(state.link);
+
+    let folder;
+    try {
+      folder = await site.getFolder(args.path);
+    } catch (e) {
+      if (e.statusCode !== 404) {
+        throw e;
+      }
     }
-    // console.log(item);
-    process.stdout.write(chalk` {yellow ${item.id}} ${itemPath}\n`);
+    if (folder) {
+      const result = await site.getFilesAndFolders(args.path);
+      children.push(...result.d.Folders.results);
+      children.push(...result.d.Files.results);
+      children.sort(({ Name: name1 }, { Name: name2 }) => name1.localeCompare(name2));
+    } else {
+      const result = await site.getFile(args.path);
+      children.push(result.d);
+    }
+    formatter = sharePointApiFormatter;
+  } else {
+    const p = path.posix.join(state.cwd, args.path || '');
+    const driveItem = await getDriveItem(state.root);
+    const od = await getOneDriveClient();
+    const item = await od.getDriveItem(driveItem, p);
+    if (item.folder) {
+      const result = await od.listChildren(driveItem, p);
+      children.push(...result.value);
+      children.sort(({ name: name1 }, { name: name2 }) => name1.localeCompare(name2));
+    } else {
+      children.push(item);
+    }
+    formatter = graphApiFormatter;
+  }
+
+  children.forEach((child) => {
+    process.stdout.write(formatter(child));
   });
 }
 
@@ -204,6 +267,10 @@ async function download(args) {
   if (!state.root) {
     throw Error(chalk`${args._[0]} needs path. use '{grey ${args.$0} resolve}' to set root.`);
   }
+  if (args.recursive && args.sharepoint) {
+    throw Error(chalk`Recursive download via Sharepoint API not supported yet.`);
+  }
+
   const p = path.posix.join(state.cwd, args.path);
 
   let dst = path.resolve('.', path.posix.basename(p));
@@ -229,7 +296,13 @@ async function download(args) {
     await downloadRecursively(od, path.dirname(dst), args.path, result);
   } else {
     info(chalk`saving to {yellow ${path.relative('.', dst)}}`);
-    const result = await od.getDriveItem(driveItem, p, true);
+    let result;
+    if (args.sharepoint) {
+      const site = await od.getSite(state.link);
+      result = await site.getFileContents(args.path);
+    } else {
+      result = await od.getDriveItem(driveItem, p, true);
+    }
     await fs.writeFile(dst, result);
   }
 }
