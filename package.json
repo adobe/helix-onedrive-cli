@@ -28,7 +28,7 @@
     "@adobe/helix-log": "6.0.0",
     "@adobe/helix-onedrive-support": "8.0.8",
     "chalk-template": "0.4.0",
-    "@adobe/helix-shared-config": "8.1.0",
+    "@adobe/helix-shared-config": "8.2.0",
     "cookie-parser": "1.4.6",
     "dotenv": "16.0.1",
     "express": "4.18.1",
