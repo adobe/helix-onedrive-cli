@@ -26,7 +26,7 @@
   "homepage": "https://github.com/adobe/helix-onedrive-cli#readme",
   "dependencies": {
     "@adobe/helix-log": "6.0.0",
-    "@adobe/helix-onedrive-support": "8.1.0",
+    "@adobe/helix-onedrive-support": "8.1.1",
     "chalk-template": "0.4.0",
     "@adobe/helix-shared-config": "8.2.0",
     "cookie-parser": "1.4.6",
