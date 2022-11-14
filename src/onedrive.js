@@ -12,8 +12,6 @@
 import fs from 'fs-extra';
 import path from 'path';
 import chalk from 'chalk-template';
-import openBrowser from 'open';
-import readline from 'readline';
 import { URLSearchParams } from 'url';
 import { MountConfig } from '@adobe/helix-shared-config';
 import { debug, error, info } from './logging.js';
@@ -23,57 +21,8 @@ import {
 
 const AUTH_FILE = '.auth.json';
 
-async function prompt(msg, hide = false) {
-  return new Promise((res) => {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    rl.question(msg, (value) => {
-      rl.close();
-      res(value);
-    });
-    // eslint-disable-next-line no-underscore-dangle
-    rl._writeToOutput = function _writeToOutput(c) {
-      if (!hide || c.trim() === '\n' || c === '\r' || c === '\r\n') {
-        rl.output.write(c);
-      } else {
-        rl.output.write('*');
-      }
-    };
-  });
-}
-
-async function login(username, password) {
+async function login() {
   const od = await getOneDriveClient();
-  if (od.refreshToken) {
-    const tokenResponse = await od.getAccessToken();
-    if (tokenResponse.refreshToken) {
-      info('already logged in.');
-      return;
-    }
-  }
-  if (username !== undefined) {
-    if (!username) {
-      // eslint-disable-next-line no-param-reassign
-      username = await prompt('username: ');
-    } else {
-      info(`username: ${username}`);
-    }
-    if (!password) {
-      // eslint-disable-next-line no-param-reassign
-      password = await prompt('password: ', true);
-    } else {
-      info('password: ***');
-    }
-    od.username = username;
-    od.password = password;
-  } else {
-    await od.login(async (code) => {
-      await openBrowser(code.verificationUrl);
-    });
-  }
-
   const result = await od.me();
   info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
 }

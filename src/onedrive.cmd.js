@@ -23,18 +23,8 @@ export default async function install(yargs) {
     })
     .command({
       command: 'login',
-      desc: 'Start the login interactive flow or ROPC flow with username / password.',
-      builder: (y) => y
-        .option('username', {
-          alias: 'u',
-          type: 'string',
-          description: 'Username for ROPC flow.',
-        }).option('password', {
-          alias: 'p',
-          type: 'string',
-          description: 'Password for ROPC flow.',
-        }),
-      handler: (y) => onedrive.login(y.username, y.password),
+      desc: 'Start the login interactive flow',
+      handler: onedrive.login,
     })
     .command({
       command: 'logout',
