@@ -10,9 +10,10 @@
  * governing permissions and limitations under the License.
  */
 import fs from 'fs-extra';
+import openBrowser from 'open';
 import chalk from 'chalk-template';
-import { OneDrive } from '@adobe/helix-onedrive-support';
-import { logger, debug, info } from './logging.js';
+import { FSCachePlugin, OneDrive, OneDriveAuth } from '@adobe/helix-onedrive-support';
+import { logger, info } from './logging.js';
 
 const STATE_FILE = '.hlx-1d.json';
 const AUTH_FILE = '.auth.json';
@@ -52,8 +53,6 @@ export async function getOneDriveClient() {
     AZURE_APP_CLIENT_ID: clientId = DEFAULT_CLIENT_ID,
     AZURE_APP_CLIENT_SECRET: clientSecret = '',
     AZURE_APP_TENANT: tenant = '',
-    AZURE_APP_USER: username = '',
-    AZURE_APP_PASS: password = '',
   } = process.env;
 
   if (!clientId) {
@@ -63,40 +62,20 @@ export async function getOneDriveClient() {
     info(chalk`AZURE_APP_CLIENT_SECRET={gray <client-secret of the app>}`);
     process.exit(-1);
   }
-  let tokens = [];
-  try {
-    tokens = await fs.readJson(AUTH_FILE, 'utf-8');
-  } catch (e) {
-    // ignore
-  }
-
-  let {
-    AZURE_APP_REFRESH_TOKEN: refreshToken = '',
-  } = process.env;
-
-  if (!refreshToken && tokens.length) {
-    refreshToken = tokens[0].refreshToken;
-  }
-
-  client = new OneDrive({
+  const auth = new OneDriveAuth({
     clientId,
     clientSecret,
-    refreshToken,
     tenant,
-    username,
-    password,
     localAuthCache: true,
+    cachePlugin: new FSCachePlugin({ log: logger, filePath: AUTH_FILE }),
+    onCode: async (code) => {
+      info(code.message);
+      await openBrowser(code.verificationUri);
+    },
     log: logger,
   });
+  await auth.authenticate();
 
-  await client.loadTokenCache(tokens);
-
-  // register event handle to write back tokens.
-  client.on('tokens', (newTokens) => {
-    // don't store the tokens w/o refresh token
-    const validTokens = newTokens.filter((tok) => tok.refreshToken);
-    fs.writeFileSync(AUTH_FILE, JSON.stringify(validTokens, null, 2), 'utf-8');
-    debug(`updated ${AUTH_FILE} file.`);
-  });
+  client = new OneDrive({ auth });
   return client;
 }
