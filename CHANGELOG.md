@@ -1,3 +1,10 @@
+## [1.11.101](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.100...v1.11.101) (2022-12-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v9.1.2 ([93d7648](https://github.com/adobe/helix-onedrive-cli/commit/93d76485bb9acf7f7f3836a5a67d3f05942a16f0))
+
 ## [1.11.100](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.99...v1.11.100) (2022-12-15)
 
 
