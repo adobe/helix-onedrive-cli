@@ -10,3 +10,5 @@ test-results.xml
 .env*
 .auth.json
 .hlx-1d.json
+.git/
+.git/
