@@ -42,7 +42,7 @@
     "@semantic-release/npm": "9.0.2",
     "c8": "7.12.0",
     "codecov": "3.8.3",
-    "eslint": "8.32.0",
+    "eslint": "8.33.0",
     "husky": "8.0.3",
     "junit-report-builder": "3.0.1",
     "lint-staged": "13.1.0",
