@@ -32,8 +32,8 @@
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "fs-extra": "11.1.0",
-    "open": "8.4.1",
-    "yargs": "17.7.0"
+    "open": "8.4.2",
+    "yargs": "17.7.1"
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "2.0.2",
