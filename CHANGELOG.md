@@ -1,3 +1,10 @@
+## [1.11.148](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.147...v1.11.148) (2023-05-22)
+
+
+### Bug Fixes
+
+* **deps:** use shared-token-cache ([#494](https://github.com/adobe/helix-onedrive-cli/issues/494)) ([3573c24](https://github.com/adobe/helix-onedrive-cli/commit/3573c246b1012152144833a485b5f6f6dc1b6d9e))
+
 ## [1.11.147](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.146...v1.11.147) (2023-05-19)
 
 
