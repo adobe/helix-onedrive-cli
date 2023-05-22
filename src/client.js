@@ -12,7 +12,8 @@
 import fs from 'fs-extra';
 import openBrowser from 'open';
 import chalk from 'chalk-template';
-import { FSCachePlugin, OneDrive, OneDriveAuth } from '@adobe/helix-onedrive-support';
+import { OneDrive, OneDriveAuth } from '@adobe/helix-onedrive-support';
+import { FSCachePlugin } from '@adobe/helix-shared-tokencache';
 import { logger, info } from './logging.js';
 
 const STATE_FILE = '.hlx-1d.json';
