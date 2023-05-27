@@ -1,3 +1,10 @@
+## [1.11.152](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.151...v1.11.152) (2023-05-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency chalk-template to v1.1.0 ([edf08d2](https://github.com/adobe/helix-onedrive-cli/commit/edf08d26f96bbe4e4f3ec11c58997e13cb7a51ef))
+
 ## [1.11.151](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.150...v1.11.151) (2023-05-23)
 
 
