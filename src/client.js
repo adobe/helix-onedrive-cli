@@ -12,7 +12,7 @@
 import fs from 'fs-extra';
 import openBrowser from 'open';
 import chalk from 'chalk-template';
-import { OneDrive, OneDriveAuth } from '@adobe/helix-onedrive-support';
+import { OneDrive, OneDriveAuth, AcquireMethod } from '@adobe/helix-onedrive-support';
 import { FSCachePlugin } from '@adobe/helix-shared-tokencache';
 import { logger, info } from './logging.js';
 
@@ -46,14 +46,14 @@ let client = null;
  *
  * @returns {OneDrive} OneDrive client
  */
-export async function getOneDriveClient() {
+export async function getOneDriveClient(shareUrl) {
   if (client) {
     return client;
   }
   const {
     AZURE_APP_CLIENT_ID: clientId = DEFAULT_CLIENT_ID,
     AZURE_APP_CLIENT_SECRET: clientSecret = '',
-    AZURE_APP_TENANT: tenant = '',
+    AZURE_APP_TENANT: tenant = state.tenant || '',
   } = process.env;
 
   if (!clientId) {
@@ -63,6 +63,14 @@ export async function getOneDriveClient() {
     info(chalk`AZURE_APP_CLIENT_SECRET={gray <client-secret of the app>}`);
     process.exit(-1);
   }
+
+  if (!tenant && !shareUrl) {
+    info(chalk`{red error:} Missing tenant environment. run 1d resolve to set one.`);
+    info(chalk`Suggest to create a {yellow .env} file with:\n`);
+    info(chalk`AZURE_APP_TENANT={gray <sharepoint tenant>}`);
+    process.exit(-1);
+  }
+
   const auth = new OneDriveAuth({
     clientId,
     clientSecret,
@@ -73,9 +81,20 @@ export async function getOneDriveClient() {
       info(code.message);
       await openBrowser(code.verificationUri);
     },
+    acquireMethod: state.delegated
+      ? AcquireMethod.BY_DEVICE_CODE
+      : AcquireMethod.BY_CLIENT_CREDENTIAL,
     log: logger,
   });
+
+  if (!tenant) {
+    await auth.initTenantFromUrl(shareUrl);
+  }
+
   await auth.authenticate();
+
+  state.tenant = auth.tenant;
+  await saveState();
 
   client = new OneDrive({ auth });
   return client;

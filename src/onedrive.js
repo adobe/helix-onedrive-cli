@@ -16,12 +16,14 @@ import { URLSearchParams } from 'url';
 import { MountConfig } from '@adobe/helix-shared-config';
 import { debug, error, info } from './logging.js';
 import {
-  getOneDriveClient, getState, loadState, saveState,
+  getOneDriveClient, loadState, saveState,
 } from './client.js';
 
 const AUTH_FILE = '.auth.json';
 
 async function login() {
+  const state = await loadState();
+  state.delegated = true;
   const od = await getOneDriveClient();
   const result = await od.me();
   info(chalk`Logged in as: {yellow ${result.displayName}} {grey (${result.mail})}`);
@@ -30,9 +32,13 @@ async function login() {
 async function logout() {
   // for now, we just delete the .auth.json
   await fs.remove(AUTH_FILE);
+  const state = await loadState();
+  state.delegated = false;
+  await saveState();
 }
 
 async function me() {
+  await loadState();
   const od = await getOneDriveClient();
   await od.me();
   const result = await od.me();
@@ -40,8 +46,9 @@ async function me() {
 }
 
 async function resolve(args) {
-  const od = await getOneDriveClient();
+  const state = await loadState();
   const { link } = args;
+  const od = await getOneDriveClient(link);
   const result = link.startsWith('/drives/')
     ? await od.getDriveRootItem(link.split('/')[2])
     : await od.getDriveItemFromShareLink(link);
@@ -52,7 +59,8 @@ async function resolve(args) {
   info(chalk`     Id: {yellow ${id}}`);
   info(chalk`    URL: {yellow ${webUrl}}`);
   info(chalk`DriveId: {yellow ${driveId}}`);
-  const state = await getState();
+  info(chalk` Tenant: {yellow ${state.tenant}}`);
+
   state.link = link;
   state.root = canonicalPath;
   state.cwd = '/';
@@ -81,7 +89,7 @@ function dateFormat(s) {
 }
 
 function graphApiFormatter(item) {
-  const user = item.lastModifiedBy.user.email;
+  const user = item.lastModifiedBy.user.email || item.lastModifiedBy.user.displayName || 'unknown';
   const date = item.lastModifiedDateTime;
   const size = item.folder?.childCount ?? item.size;
   let { name } = item;
