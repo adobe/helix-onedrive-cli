@@ -43,13 +43,13 @@
     "@semantic-release/npm": "11.0.0",
     "c8": "8.0.1",
     "codecov": "3.8.3",
-    "eslint": "8.49.0",
+    "eslint": "8.50.0",
     "husky": "8.0.3",
     "junit-report-builder": "3.0.1",
     "lint-staged": "14.0.1",
     "mocha": "10.2.0",
     "nodemon": "3.0.1",
-    "semantic-release": "22.0.0"
+    "semantic-release": "22.0.4"
   },
   "lint-staged": {
     "*.js": "eslint"
