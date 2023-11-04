@@ -40,16 +40,16 @@
     "@adobe/eslint-config-helix": "2.0.4",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@semantic-release/npm": "11.0.0",
+    "@semantic-release/npm": "11.0.1",
     "c8": "8.0.1",
     "codecov": "3.8.3",
-    "eslint": "8.52.0",
+    "eslint": "8.53.0",
     "husky": "8.0.3",
     "junit-report-builder": "3.1.0",
     "lint-staged": "15.0.2",
     "mocha": "10.2.0",
     "nodemon": "3.0.1",
-    "semantic-release": "22.0.5"
+    "semantic-release": "22.0.7"
   },
   "lint-staged": {
     "*.js": "eslint"
