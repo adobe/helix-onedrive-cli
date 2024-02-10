@@ -46,8 +46,8 @@
     "eslint": "8.56.0",
     "husky": "9.0.10",
     "junit-report-builder": "3.2.1",
-    "lint-staged": "15.2.1",
-    "mocha": "10.2.0",
+    "lint-staged": "15.2.2",
+    "mocha": "10.3.0",
     "nodemon": "3.0.3",
     "semantic-release": "22.0.12"
   },
