@@ -1,3 +1,10 @@
+## [1.11.235](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.234...v1.11.235) (2024-03-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express to v4.19.1 ([f700a2b](https://github.com/adobe/helix-onedrive-cli/commit/f700a2b12dec531c179d08c0f12020c4a5af04c9))
+
 ## [1.11.234](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.233...v1.11.234) (2024-03-17)
 
 
