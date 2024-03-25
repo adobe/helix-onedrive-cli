@@ -1,3 +1,10 @@
+## [1.11.239](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.238...v1.11.239) (2024-03-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express to v4.19.2 [security] ([3de204f](https://github.com/adobe/helix-onedrive-cli/commit/3de204f9aac254a5ddbc143e951c6438bdf332e7))
+
 ## [1.11.238](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.237...v1.11.238) (2024-03-25)
 
 
