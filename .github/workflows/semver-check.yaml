@@ -12,4 +12,4 @@ jobs:
         id: comment
         uses: adobe-rnd/github-semantic-release-comment-action@main
         with:
-          repo-GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
