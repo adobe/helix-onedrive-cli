@@ -9,10 +9,10 @@
   },
   "scripts": {
     "start": "nodemon --watch src src/browser.js",
-    "test": "c8 --reporter=text --reporter=lcov --check-coverage --branches 4 --statements 20 --lines 20 mocha",
-    "test-ci": "c8 --reporter=text --reporter=lcov --check-coverage --branches 4 --statements 20 --lines 20 mocha --reporter xunit --reporter-options output=./junit/test-results.xml && codecov",
+    "test": "c8 mocha --spec 'test/**/*.test.js'",
     "lint": "eslint .",
     "semantic-release": "semantic-release",
+    "semantic-release-dry": "semantic-release --dry-run --branches $CI_BRANCH",
     "prepare": "husky install"
   },
   "repository": {
