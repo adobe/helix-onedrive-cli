@@ -34,7 +34,7 @@
     "express": "5.1.0",
     "fs-extra": "11.3.0",
     "open": "10.1.2",
-    "yargs": "17.7.2"
+    "yargs": "18.0.0"
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "2.0.9",
