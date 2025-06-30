@@ -1,3 +1,10 @@
+## [1.11.352](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.351...v1.11.352) (2025-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update external fixes ([#802](https://github.com/adobe/helix-onedrive-cli/issues/802)) ([7af6e11](https://github.com/adobe/helix-onedrive-cli/commit/7af6e1144e6f447aaf3f75afda1ac4e469aa06a7))
+
 ## [1.11.351](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.350...v1.11.351) (2025-06-27)
 
 
