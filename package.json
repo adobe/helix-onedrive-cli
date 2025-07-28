@@ -30,7 +30,7 @@
     "@adobe/helix-shared-tokencache": "1.5.0",
     "chalk-template": "1.1.0",
     "cookie-parser": "1.4.7",
-    "dotenv": "17.2.0",
+    "dotenv": "17.2.1",
     "express": "5.1.0",
     "fs-extra": "11.3.0",
     "open": "10.2.0",
