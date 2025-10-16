@@ -50,7 +50,7 @@
     "lint-staged": "16.2.3",
     "mocha": "11.7.2",
     "nodemon": "3.1.10",
-    "semantic-release": "24.2.9"
+    "semantic-release": "25.0.0"
   },
   "lint-staged": {
     "*.js": "eslint"
