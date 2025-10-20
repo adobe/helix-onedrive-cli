@@ -30,7 +30,7 @@
     "@adobe/helix-shared-tokencache": "1.5.0",
     "chalk-template": "1.1.2",
     "cookie-parser": "1.4.7",
-    "dotenv": "17.2.2",
+    "dotenv": "17.2.3",
     "express": "5.1.0",
     "fs-extra": "11.3.2",
     "open": "10.2.0",
@@ -48,7 +48,7 @@
     "husky": "9.1.7",
     "junit-report-builder": "5.1.1",
     "lint-staged": "16.2.3",
-    "mocha": "11.7.2",
+    "mocha": "11.7.4",
     "nodemon": "3.1.10",
     "semantic-release": "24.2.9"
   },
