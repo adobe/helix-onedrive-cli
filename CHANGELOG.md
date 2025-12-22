@@ -1,3 +1,10 @@
+## [1.11.380](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.379...v1.11.380) (2025-12-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express to v5.2.1 ([#851](https://github.com/adobe/helix-onedrive-cli/issues/851)) ([eb835b8](https://github.com/adobe/helix-onedrive-cli/commit/eb835b8f0f5159629e580dc040d9fa5b5850a90c))
+
 ## [1.11.379](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.378...v1.11.379) (2025-12-18)
 
 
