@@ -1,3 +1,10 @@
+## [1.11.382](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.381...v1.11.382) (2026-01-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency fs-extra to v11.3.3 ([#855](https://github.com/adobe/helix-onedrive-cli/issues/855)) ([96f4e1c](https://github.com/adobe/helix-onedrive-cli/commit/96f4e1c6e911ab67be0cd74da6adce34d7b490e1))
+
 ## [1.11.381](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.380...v1.11.381) (2025-12-23)
 
 
