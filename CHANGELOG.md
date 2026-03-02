@@ -1,3 +1,10 @@
+## [1.11.389](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.388...v1.11.389) (2026-03-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dotenv to v17.3.1 ([#867](https://github.com/adobe/helix-onedrive-cli/issues/867)) ([41d568a](https://github.com/adobe/helix-onedrive-cli/commit/41d568ac4ba5a8c3c914ad765e4716d5b0fc9b21))
+
 ## [1.11.388](https://github.com/adobe/helix-onedrive-cli/compare/v1.11.387...v1.11.388) (2026-02-24)
 
 
