@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-onedrive-cli",
-  "version": "1.11.397",
+  "version": "1.11.398",
   "description": "Helix OneDrive CLI",
   "main": "src/index.js",
   "type": "module",
