@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/adobe/helix-onedrive-cli#readme",
   "dependencies": {
-    "@adobe/helix-onedrive-support": "12.3.9",
-    "@adobe/helix-shared-config": "11.1.24",
-    "@adobe/helix-shared-tokencache": "1.5.3",
+    "@adobe/helix-onedrive-support": "12.3.10",
+    "@adobe/helix-shared-config": "11.1.25",
+    "@adobe/helix-shared-tokencache": "1.5.4",
     "chalk-template": "1.1.2",
     "cookie-parser": "1.4.7",
     "dotenv": "17.4.2",
@@ -37,7 +37,7 @@
     "yargs": "18.0.0"
   },
   "devDependencies": {
-    "@adobe/eslint-config-helix": "3.0.27",
+    "@adobe/eslint-config-helix": "3.0.28",
     "@eslint/config-helpers": "0.6.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
