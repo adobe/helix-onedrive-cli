@@ -32,7 +32,7 @@
     "cookie-parser": "1.4.7",
     "dotenv": "17.4.2",
     "express": "5.2.1",
-    "fs-extra": "11.3.5",
+    "fs-extra": "11.3.6",
     "open": "11.0.0",
     "yargs": "18.0.0"
   },
@@ -50,7 +50,7 @@
     "lint-staged": "17.0.8",
     "mocha": "11.7.6",
     "nodemon": "3.1.14",
-    "semantic-release": "25.0.5"
+    "semantic-release": "25.0.7"
   },
   "lint-staged": {
     "*.js": "eslint"
