@@ -47,10 +47,10 @@
     "eslint": "9.4.0",
     "husky": "9.1.7",
     "junit-report-builder": "5.1.2",
-    "lint-staged": "17.0.8",
+    "lint-staged": "17.1.0",
     "mocha": "11.7.6",
     "nodemon": "3.1.14",
-    "semantic-release": "25.0.7"
+    "semantic-release": "25.0.8"
   },
   "lint-staged": {
     "*.js": "eslint"
